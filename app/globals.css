@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0A1628;
+  --electric: #2563EB;
+  --amber: #F59E0B;
+  --green: #10B981;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #0A1628;
+  color: white;
+  font-family: 'Inter', system-ui, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f1e35;
+}
+::-webkit-scrollbar-thumb {
+  background: #2563eb55;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563ebaa;
+}
+
+/* Likert scale button animation */
+.likert-btn {
+  transition: all 0.15s ease;
+}
+.likert-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+.likert-btn.selected {
+  transform: scale(1.08);
+}
+
+/* Segment tab */
+.segment-tab {
+  transition: all 0.2s ease;
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-break {
+    page-break-before: always;
+  }
+  .report-card {
+    break-inside: avoid;
+  }
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effect */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+}
+
+.glow-blue-sm {
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+}
