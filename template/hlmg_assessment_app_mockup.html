@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Growth Readiness Assessment — Hong Leong Group</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0e1a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column}
+
+  /* NAV */
+  nav{background:#0f1629;border-bottom:1px solid #1e2a45;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .nav-brand{display:flex;align-items:center;gap:12px}
+  .nav-logo{font-size:13px;font-weight:700;color:#f1f5f9;letter-spacing:0.04em}
+  .nav-logo span{color:#2563eb}
+  .nav-divider{width:1px;height:18px;background:#1e2a45}
+  .nav-client{font-size:12px;color:#64748b;font-weight:500}
+  .nav-badge{font-size:11px;color:#60a5fa;background:#1e3a5f;padding:4px 10px;border-radius:20px;font-weight:600}
+
+  /* SCREENS */
+  .screen{display:none;flex:1;flex-direction:column}
+  .screen.active{display:flex}
+
+  /* HERO / LANDING */
+  .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;max-width:680px;margin:0 auto;width:100%}
+  .hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#60a5fa;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+  .hero-eyebrow::before,.hero-eyebrow::after{content:'';flex:1;height:1px;background:#1e2a45;max-width:40px}
+  .hero-title{font-size:36px;font-weight:800;color:#f1f5f9;line-height:1.15;margin-bottom:16px;letter-spacing:-0.02em}
+  .hero-title span{color:#2563eb}
+  .hero-sub{font-size:15px;color:#64748b;line-height:1.7;max-width:520px;margin-bottom:40px}
+  .hero-stats{display:flex;gap:32px;margin-bottom:48px;flex-wrap:wrap;justify-content:center}
+  .stat{text-align:center}
+  .stat-num{font-size:28px;font-weight:800;color:#2563eb;display:block}
+  .stat-label{font-size:11px;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+  .btn-primary{background:#2563eb;color:#fff;font-size:15px;font-weight:600;padding:14px 36px;border-radius:8px;border:none;cursor:pointer;transition:background .15s,transform .1s;letter-spacing:.02em}
+  .btn-primary:hover{background:#1d4ed8;transform:translateY(-1px)}
+  .hero-note{margin-top:16px;font-size:12px;color:#475569}
+
+  /* CONTEXT SELECTOR */
+  .page{flex:1;max-width:860px;margin:0 auto;padding:40px 24px 64px;width:100%}
+  .page-title{font-size:26px;font-weight:700;color:#f1f5f9;text-align:center;margin-bottom:6px}
+  .page-sub{font-size:13px;color:#64748b;text-align:center;margin-bottom:40px}
+
+  .step{margin-bottom:32px}
+  .step-label{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .step-num{width:26px;height:26px;border-radius:50%;background:#2563eb;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+  .step-title{font-size:15px;font-weight:600;color:#cbd5e1}
+  .step-check{margin-left:auto;font-size:12px;color:#059669;font-weight:600;opacity:0;transition:opacity .2s}
+  .step-check.show{opacity:1}
+
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .card{background:#111827;border:1.5px solid #1e2a45;border-radius:12px;padding:18px 16px;cursor:pointer;transition:border-color .18s,background .18s,transform .1s;position:relative;user-select:none}
+  .card:hover{border-color:#3b82f6;background:#131f35;transform:translateY(-1px)}
+  .card.selected{border-color:#2563eb;background:#0e1f3d;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  .card.selected::after{content:'✓';position:absolute;top:10px;right:12px;font-size:12px;color:#60a5fa;font-weight:700}
+  .card.disabled{opacity:.35;pointer-events:none}
+  .card-icon{font-size:20px;margin-bottom:8px;display:block}
+  .card-name{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:3px}
+  .card-sub{font-size:11px;font-weight:600;color:#2563eb;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+  .card-desc{font-size:11px;color:#64748b;line-height:1.5}
+
+  .pill-row{display:flex;gap:10px}
+  .pill{flex:1;background:#111827;border:1.5px solid #1e2a45;border-radius:8px;padding:11px 14px;cursor:pointer;transition:border-color .15s,background .15s;text-align:center;user-select:none}
+  .pill:hover{border-color:#3b82f6;background:#131f35}
+  .pill.selected{border-color:#2563eb;background:#0e1f3d}
+  .pill.disabled{opacity:.35;pointer-events:none}
+  .pill-title{font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:2px}
+  .pill-sub{font-size:10px;color:#64748b}
+
+  .step-divider{height:1px;background:#1e2a45;margin:4px 0 28px}
+
+  .cta-wrap{text-align:center;margin-top:8px}
+  .cta-note{margin-top:10px;font-size:12px;color:#475569}
+
+  /* CONFIRMATION STATE */
+  .confirm-box{display:none;background:#0a1f0f;border:1.5px solid #059669;border-radius:12px;padding:24px 28px;text-align:center;margin-top:28px}
+  .confirm-box.show{display:block}
+  .confirm-icon{font-size:28px;margin-bottom:10px}
+  .confirm-title{font-size:16px;font-weight:700;color:#34d399;margin-bottom:6px}
+  .confirm-sub{font-size:13px;color:#64748b;line-height:1.6}
+  .confirm-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .confirm-tag{font-size:11px;font-weight:600;color:#94a3b8;background:#111827;border:1px solid #1e2a45;padding:4px 12px;border-radius:20px}
+
+  /* FOOTER */
+  footer{background:#0f1629;border-top:1px solid #1e2a45;padding:12px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .footer-brand{font-size:11px;color:#475569}
+  .footer-brand strong{color:#64748b}
+  .footer-conf{font-size:11px;color:#334155}
+
+  @media(max-width:600px){
+    .card-grid{grid-template-columns:1fr}
+    .pill-row{flex-direction:column}
+    .hero-stats{gap:20px}
+    .hero-title{font-size:28px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo">Transform<span>TechX</span></span>
+    <div class="nav-divider"></div>
+    <span class="nav-client">Hong Leong Group</span>
+  </div>
+  <span class="nav-badge">AI Readiness Assessment</span>
+</nav>
+
+<!-- ══════════════════════════════════════
+     SCREEN 1 — LANDING
+══════════════════════════════════════ -->
+<div class="screen active" id="screen-landing">
+  <div class="hero">
+    <div class="hero-eyebrow">Hong Leong Group · Confidential</div>
+    <h1 class="hero-title">Where does your division<br>stand on <span>AI readiness?</span></h1>
+    <p class="hero-sub">20 questions. 12 minutes. A real score across Governance, Technology, People, and Culture — so Hong Leong Group has data, not assumptions, when building its AI roadmap.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">20</span><span class="stat-label">Questions</span></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Dimensions</span></div>
+      <div class="stat"><span class="stat-num">12</span><span class="stat-label">Minutes</span></div>
+    </div>
+    <button class="btn-primary" onclick="go('screen-context')">Begin Assessment →</button>
+    <p class="hero-note">Your individual responses are confidential. Only group-level results are shared with leadership.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCREEN 2 — CONTEXT SELECTOR
+══════════════════════════════════════ -->
+<div class="screen" id="screen-context">
+  <div class="page">
+    <h1 class="page-title">Select your context</h1>
+    <p class="page-sub">Your answers will be tailored to your division, function, and level.</p>
+
+    <!-- STEP 1: DIVISION -->
+    <div class="step">
+      <div class="step-label">
+        <div class="step-num" id="snum1">1</div>
+        <span class="step-title">Select your Division</span>
+        <span class="step-check" id="scheck1">✓ Selected</span>
+      </div>
+      <div class="card-grid">
+        <div class="card" onclick="selectDiv('mpi', 'MPI · Semiconductor', this)">
+          <span class="card-icon">🔬</span>
+          <div class="card-name">MPI</div>
+          <div class="card-sub">Semiconductor</div>
+          <div class="card-desc">Malaysian Pacific Industries — IC packaging, precision testing, electronics manufacturing</div>
+        </div>
+        <div class="card" onclick="selectDiv('hli', 'HLI · Automotive & Tiles', this)">
+          <span class="card-icon">🏍️</span>
+          <div class="card-name">HLI</div>
+          <div class="card-sub">Automotive & Tiles</div>
+          <div class="card-desc">Yamaha Motor, fibre cement boards, ceramic tiles — multi-product industrial manufacturing</div>
+        </div>
+        <div class="card" onclick="selectDiv('hcib', 'HCIB · Cement & Building', this)">
+          <span class="card-icon">🏗️</span>
+          <div class="card-name">HCIB</div>
+          <div class="card-sub">Cement & Building</div>
+          <div class="card-desc">Hume Cement — ready-mix concrete, aggregates, building products</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 2: FUNCTION -->
+    <div class="step">
+      <div class="step-label">
+        <div class="step-num" id="snum2">2</div>
+        <span class="step-title">Select your Function</span>
+        <span class="step-check" id="scheck2">✓ Selected</span>
+      </div>
+      <div class="card-grid" id="fn-grid">
+        <div class="card disabled" onclick="selectFn('support', 'Support Functions', this)">
+          <span class="card-icon">🗂️</span>
+          <div class="card-name">Support Functions</div>
+          <div class="card-sub">Finance · HR · Procurement</div>
+          <div class="card-desc">Enabling functions — cost ops, workforce planning, vendor management, compliance</div>
+        </div>
+        <div class="card disabled" onclick="selectFn('ops', 'Manufacturing & Supply Chain', this)">
+          <span class="card-icon">⚙️</span>
+          <div class="card-name">Manufacturing & Supply Chain</div>
+          <div class="card-sub">Ops · Production · Logistics</div>
+          <div class="card-desc">Plant floor, quality control, demand planning, inventory, supplier operations</div>
+        </div>
+        <div class="card disabled" onclick="selectFn('commercial', 'Sales & Marketing', this)">
+          <span class="card-icon">📈</span>
+          <div class="card-name">Sales & Marketing</div>
+          <div class="card-sub">Revenue · Trade · Distribution</div>
+          <div class="card-desc">Channel strategy, pricing, customer analytics, distributor performance</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-divider"></div>
+
+    <!-- STEP 3: LEVEL -->
+    <div class="step">
+      <div class="step-label">
+        <div class="step-num" id="snum3">3</div>
+        <span class="step-title">Select your Level</span>
+        <span class="step-check" id="scheck3">✓ Selected</span>
+      </div>
+      <div class="pill-row" id="lvl-row">
+        <div class="pill disabled" onclick="selectLvl('cxo', 'VP / CXO', this)">
+          <div class="pill-title">VP / CXO</div>
+          <div class="pill-sub">Strategic decisions, P&amp;L ownership</div>
+        </div>
+        <div class="pill disabled" onclick="selectLvl('senior', 'Sr Manager / Director', this)">
+          <div class="pill-title">Sr Manager / Director</div>
+          <div class="pill-sub">Function leadership, team management</div>
+        </div>
+        <div class="pill disabled" onclick="selectLvl('exec', 'Executive / Manager', this)">
+          <div class="pill-title">Executive / Manager</div>
+          <div class="pill-sub">Day-to-day operations, team member</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-wrap" style="margin-top:36px">
+      <button class="btn-primary" id="begin-btn" style="opacity:.35;pointer-events:none" onclick="submitContext()">Begin Assessment →</button>
+      <p class="cta-note">20 questions · your answers are confidential</p>
+    </div>
+
+    <!-- CONFIRMATION (shown after submit) -->
+    <div class="confirm-box" id="confirm-box">
+      <div class="confirm-icon">✅</div>
+      <div class="confirm-title">You're registered for the assessment</div>
+      <div class="confirm-sub">The assessment link will be shared with you once the Hong Leong Group rollout goes live. Your context has been saved.</div>
+      <div class="confirm-tags" id="confirm-tags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">Powered by <strong>TransformTechX</strong> · AI Growth Readiness Framework</span>
+  <span class="footer-conf">Confidential · Hong Leong Group Internal Use Only</span>
+</footer>
+
+<script>
+let selDiv = null, selFn = null, selLvl = null;
+let labelDiv = '', labelFn = '', labelLvl = '';
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function selectDiv(id, label, el){
+  document.querySelectorAll('#screen-context .step:nth-child(1) .card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selDiv = id; labelDiv = label;
+  document.getElementById('snum1').style.background='#059669';
+  document.getElementById('scheck1').classList.add('show');
+  document.querySelectorAll('#fn-grid .card').forEach(c=>c.classList.remove('disabled'));
+  checkReady();
+}
+
+function selectFn(id, label, el){
+  document.querySelectorAll('#fn-grid .card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selFn = id; labelFn = label;
+  document.getElementById('snum2').style.background='#059669';
+  document.getElementById('scheck2').classList.add('show');
+  document.querySelectorAll('#lvl-row .pill').forEach(p=>p.classList.remove('disabled'));
+  checkReady();
+}
+
+function selectLvl(id, label, el){
+  document.querySelectorAll('#lvl-row .pill').forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');
+  selLvl = id; labelLvl = label;
+  document.getElementById('snum3').style.background='#059669';
+  document.getElementById('scheck3').classList.add('show');
+  checkReady();
+}
+
+function checkReady(){
+  const btn = document.getElementById('begin-btn');
+  if(selDiv && selFn && selLvl){
+    btn.style.opacity='1'; btn.style.pointerEvents='auto';
+  }
+}
+
+function submitContext(){
+  document.getElementById('begin-btn').style.display='none';
+  document.querySelector('.cta-note').style.display='none';
+  const box = document.getElementById('confirm-box');
+  box.classList.add('show');
+  document.getElementById('confirm-tags').innerHTML =
+    `<span class="confirm-tag">${labelDiv}</span>` +
+    `<span class="confirm-tag">${labelFn}</span>` +
+    `<span class="confirm-tag">${labelLvl}</span>`;
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+</script>
+</body>
+</html>

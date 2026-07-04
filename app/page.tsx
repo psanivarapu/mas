@@ -1,24 +1,33 @@
 'use client'
 
 import { useReducer, useEffect } from 'react'
-import type { Domain, Persona, AppState, Question } from '@/lib/types'
+import type { Division, FunctionArea, Level, AppState, Question } from '@/lib/types'
 import { fetchQuestions } from '@/lib/questions'
 import LandingScreen from '@/components/LandingScreen'
+import ContextScreen from '@/components/ContextScreen'
 import QuestionnaireScreen from '@/components/QuestionnaireScreen'
 import ReportScreen from '@/components/ReportScreen'
 
 type Action =
-  | { type: 'START'; domain: Domain; persona: Persona }
+  | { type: 'START' }
+  | { type: 'SET_CONTEXT'; division: Division; functionArea: FunctionArea; level: Level }
   | { type: 'ANSWER'; questionId: string; value: number }
   | { type: 'COMPLETE' }
   | { type: 'RETAKE' }
-  | { type: 'RESTORE'; domain: Domain; persona: Persona; answers: Record<string, number> }
+  | {
+      type: 'RESTORE'
+      division: Division
+      functionArea: FunctionArea
+      level: Level
+      answers: Record<string, number>
+    }
   | { type: 'QUESTIONS_LOADED'; questions: Question[] }
   | { type: 'QUESTIONS_ERROR'; message: string }
 
 const INITIAL_STATE: AppState = {
-  domain: null,
-  persona: null,
+  division: null,
+  functionArea: null,
+  level: null,
   currentScreen: 'landing',
   currentQuestion: 0,
   answers: {},
@@ -29,10 +38,14 @@ const INITIAL_STATE: AppState = {
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'START':
+      return { ...state, currentScreen: 'context' }
+    case 'SET_CONTEXT':
       return {
-        ...INITIAL_STATE,
-        domain: action.domain,
-        persona: action.persona,
+        ...state,
+        division: action.division,
+        functionArea: action.functionArea,
+        level: action.level,
+        answers: {},
         currentScreen: 'questionnaire',
       }
     case 'ANSWER':
@@ -43,12 +56,13 @@ function reducer(state: AppState, action: Action): AppState {
     case 'COMPLETE':
       return { ...state, currentScreen: 'report' }
     case 'RETAKE':
-      return INITIAL_STATE
+      return { ...INITIAL_STATE, questions: state.questions }
     case 'RESTORE':
       return {
-        ...INITIAL_STATE,
-        domain: action.domain,
-        persona: action.persona,
+        ...state,
+        division: action.division,
+        functionArea: action.functionArea,
+        level: action.level,
         answers: action.answers,
         currentScreen: 'report',
       }
@@ -73,15 +87,17 @@ export default function Home() {
 
     try {
       const decoded = JSON.parse(decodeURIComponent(atob(stateParam))) as {
-        domain: Domain
-        persona: Persona
+        division: Division
+        functionArea: FunctionArea
+        level: Level
         answers: Record<string, number>
       }
-      if (decoded.domain && decoded.persona && decoded.answers) {
+      if (decoded.division && decoded.functionArea && decoded.level && decoded.answers) {
         dispatch({
           type: 'RESTORE',
-          domain: decoded.domain,
-          persona: decoded.persona,
+          division: decoded.division,
+          functionArea: decoded.functionArea,
+          level: decoded.level,
           answers: decoded.answers,
         })
         // Clean URL without reload
@@ -92,13 +108,13 @@ export default function Home() {
     }
   }, [])
 
-  // Load the question bank for the selected domain/persona from the
-  // /questionnaires text files whenever a new combination is chosen.
+  // The question set is shared across every Division/Function/Level
+  // combination, so it's loaded once, independent of context selection.
   useEffect(() => {
-    if (!state.domain || !state.persona || state.questions.length > 0) return
+    if (state.questions.length > 0) return
     let cancelled = false
 
-    fetchQuestions(state.domain, state.persona)
+    fetchQuestions()
       .then((questions) => {
         if (!cancelled) dispatch({ type: 'QUESTIONS_LOADED', questions })
       })
@@ -114,12 +130,16 @@ export default function Home() {
     return () => {
       cancelled = true
     }
-  }, [state.domain, state.persona, state.questions.length])
+  }, [state.questions.length])
 
-  if (state.currentScreen === 'landing' || !state.domain || !state.persona) {
+  if (state.currentScreen === 'landing') {
+    return <LandingScreen onStart={() => dispatch({ type: 'START' })} />
+  }
+
+  if (state.currentScreen === 'context') {
     return (
-      <LandingScreen
-        onStart={(domain, persona) => dispatch({ type: 'START', domain, persona })}
+      <ContextScreen
+        onSubmit={(division, functionArea, level) => dispatch({ type: 'SET_CONTEXT', division, functionArea, level })}
       />
     )
   }
@@ -149,11 +169,12 @@ export default function Home() {
     )
   }
 
-  if (state.currentScreen === 'questionnaire') {
+  if (state.currentScreen === 'questionnaire' && state.division && state.functionArea && state.level) {
     return (
       <QuestionnaireScreen
-        domain={state.domain}
-        persona={state.persona}
+        division={state.division}
+        functionArea={state.functionArea}
+        level={state.level}
         questions={state.questions}
         answers={state.answers}
         onAnswer={(questionId, value) => dispatch({ type: 'ANSWER', questionId, value })}
@@ -163,11 +184,12 @@ export default function Home() {
     )
   }
 
-  if (state.currentScreen === 'report') {
+  if (state.currentScreen === 'report' && state.division && state.functionArea && state.level) {
     return (
       <ReportScreen
-        domain={state.domain}
-        persona={state.persona}
+        division={state.division}
+        functionArea={state.functionArea}
+        level={state.level}
         questions={state.questions}
         answers={state.answers}
         onRetake={() => dispatch({ type: 'RETAKE' })}

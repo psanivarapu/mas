@@ -1,4 +1,4 @@
-import type { Domain, Persona, SegmentKey, Question } from './types'
+import type { SegmentKey, Question } from './types'
 
 const SEGMENT_ORDER: SegmentKey[] = ['governance', 'technology', 'people', 'culture']
 const SEGMENT_PREFIXES: Record<SegmentKey, string> = {
@@ -8,8 +8,8 @@ const SEGMENT_PREFIXES: Record<SegmentKey, string> = {
   culture: 'clt',
 }
 
-export function questionnaireFileName(domain: Domain, persona: Persona, segment: SegmentKey): string {
-  return `${domain}_${persona}_${segment}.txt`
+export function questionnaireFileName(segment: SegmentKey): string {
+  return `${segment}.txt`
 }
 
 /**
@@ -43,12 +43,12 @@ export function buildQuestions(sections: Record<SegmentKey, string[]>): Question
 }
 
 /**
- * Client-side fetch of the full question set for a domain/persona, sourced
- * live from the /questionnaires text files via the /api/questions route.
- * Always reflects the current file contents on disk (no caching).
+ * Client-side fetch of the full (shared) question set, sourced live from the
+ * /questionnaires text files via the /api/questions route. Always reflects
+ * the current file contents on disk (no caching).
  */
-export async function fetchQuestions(domain: Domain, persona: Persona): Promise<Question[]> {
-  const res = await fetch(`/api/questions?domain=${domain}&persona=${persona}`, { cache: 'no-store' })
+export async function fetchQuestions(): Promise<Question[]> {
+  const res = await fetch('/api/questions', { cache: 'no-store' })
   if (!res.ok) {
     const body = await res.json().catch(() => null)
     throw new Error(body?.error ?? `Failed to load questionnaire (${res.status})`)

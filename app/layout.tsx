@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'GenAI & Analytics Maturity Index',
+  title: 'AI Growth Readiness Assessment — Hong Leong Group',
   description:
-    'Understand where your organization stands on AI & analytics maturity. Know where to go next.',
-  keywords: ['AI maturity', 'analytics maturity', 'GenAI assessment', 'BFSI', 'Martech'],
+    'Understand where your division stands on AI readiness across Governance, Technology, People, and Culture.',
+  keywords: ['AI readiness', 'AI maturity', 'Hong Leong Group', 'TransformTechX'],
   openGraph: {
-    title: 'GenAI & Analytics Maturity Index',
-    description: 'Assess your organization\'s AI & analytics maturity in minutes.',
+    title: 'AI Growth Readiness Assessment — Hong Leong Group',
+    description: 'Assess your division\'s AI readiness in minutes.',
     type: 'website',
   },
 }

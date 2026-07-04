@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import { ArrowLeft, ArrowRight, Shield, Cpu, Users, Compass, ChevronRight, Sparkles } from 'lucide-react'
-import type { Domain, Persona, SegmentKey, Question } from '@/lib/types'
+import type { Division, FunctionArea, Level, SegmentKey, Question } from '@/lib/types'
 import { SEGMENT_CONFIGS } from '@/lib/questions'
 
 interface QuestionnaireScreenProps {
-  domain: Domain
-  persona: Persona
+  division: Division
+  functionArea: FunctionArea
+  level: Level
   questions: Question[]
   answers: Record<string, number>
   onAnswer: (questionId: string, value: number) => void
@@ -37,20 +38,28 @@ const LIKERT_OPTIONS = [
   { value: 5, label: 'Strongly\nAgree', short: '5' },
 ]
 
-const PERSONA_LABELS: Record<Persona, string> = {
-  cto: 'CTO',
-  data_scientist: 'Lead Data Scientist',
-  hr: 'HR Lead',
+const DIVISION_LABELS: Record<Division, string> = {
+  mpi: 'MPI',
+  hli: 'HLI',
+  hcib: 'HCIB',
 }
 
-const DOMAIN_LABELS: Record<Domain, string> = {
-  martech: 'Martech',
-  bfsi: 'BFSI',
+const FUNCTION_LABELS: Record<FunctionArea, string> = {
+  support: 'Support Functions',
+  ops: 'Manufacturing & Supply Chain',
+  commercial: 'Sales & Marketing',
+}
+
+const LEVEL_LABELS: Record<Level, string> = {
+  cxo: 'VP / CXO',
+  senior: 'Sr Manager / Director',
+  exec: 'Executive / Manager',
 }
 
 export default function QuestionnaireScreen({
-  domain,
-  persona,
+  division,
+  functionArea,
+  level,
   questions,
   answers,
   onAnswer,
@@ -146,13 +155,17 @@ export default function QuestionnaireScreen({
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Back</span>
             </button>
-            <div className="flex items-center gap-2 text-xs text-gray-500">
+            <div className="hidden md:flex items-center gap-2 text-xs text-gray-500">
               <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10">
-                {DOMAIN_LABELS[domain]}
+                {DIVISION_LABELS[division]}
               </span>
               <span className="text-gray-600">•</span>
               <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10">
-                {PERSONA_LABELS[persona]}
+                {FUNCTION_LABELS[functionArea]}
+              </span>
+              <span className="text-gray-600">•</span>
+              <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10">
+                {LEVEL_LABELS[level]}
               </span>
             </div>
             <div className="text-sm text-gray-400 font-medium">

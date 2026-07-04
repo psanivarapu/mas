@@ -1,0 +1,11 @@
+# Questionnaire: Technology
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# This question set is shared across all Division / Function / Level
+# combinations. Changes are picked up immediately, no rebuild needed.
+
+We have a modern, scalable data platform that can support advanced analytics and AI use cases across the Group.
+Our core systems (ERP, MES, CRM, supply chain systems) are integrated well enough to support cross-functional analytics.
+We have the infrastructure to deploy AI/ML models into live operations (e.g., production, forecasting, customer engagement).
+GenAI tools (copilots, document intelligence, forecasting assistants) are in active use in at least one part of our operations.
+We monitor deployed models and analytics tools for performance and have a process to retrain or update them.

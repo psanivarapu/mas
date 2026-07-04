@@ -1,6 +1,7 @@
-export type Domain = 'martech' | 'bfsi'
-export type Persona = 'cto' | 'data_scientist' | 'hr'
-export type Screen = 'landing' | 'questionnaire' | 'report'
+export type Division = 'mpi' | 'hli' | 'hcib'
+export type FunctionArea = 'support' | 'ops' | 'commercial'
+export type Level = 'cxo' | 'senior' | 'exec'
+export type Screen = 'landing' | 'context' | 'questionnaire' | 'report'
 export type Tier = 'bee' | 'elephant' | 'dolphin' | 'unicorn'
 export type SegmentKey = 'governance' | 'technology' | 'people' | 'culture'
 export type TimeBucket = 'immediate' | 'short' | 'medium' | 'long'
@@ -14,8 +15,9 @@ export interface Question {
 }
 
 export interface AppState {
-  domain: Domain | null
-  persona: Persona | null
+  division: Division | null
+  functionArea: FunctionArea | null
+  level: Level | null
   currentScreen: Screen
   currentQuestion: number
   answers: Record<string, number>
@@ -64,8 +66,9 @@ export interface RoadmapItem {
 }
 
 export interface ReportData {
-  domain: Domain
-  persona: Persona
+  division: Division
+  functionArea: FunctionArea
+  level: Level
   answers: Record<string, number>
   segmentScores: Record<SegmentKey, number>
   overallScore: number
@@ -73,7 +76,8 @@ export interface ReportData {
 }
 
 export interface ShareableState {
-  domain: Domain
-  persona: Persona
+  division: Division
+  functionArea: FunctionArea
+  level: Level
   answers: Record<string, number>
 }

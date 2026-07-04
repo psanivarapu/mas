@@ -1,0 +1,11 @@
+# Questionnaire: People
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# This question set is shared across all Division / Function / Level
+# combinations. Changes are picked up immediately, no rebuild needed.
+
+We have enough people with data, analytics, and AI skills to support our function's needs.
+There is a clear view of the AI/analytics skills our teams have today versus what they will need.
+Structured upskilling programs exist to build AI/analytics literacy across technical and non-technical staff.
+Leadership in our division has a working understanding of AI capabilities, limitations, and relevant use cases.
+We are able to attract and retain the talent needed to execute on our AI/analytics ambitions.

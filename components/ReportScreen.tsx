@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import type { Domain, Persona, SegmentKey, Question } from '@/lib/types'
+import type { Division, FunctionArea, Level, SegmentKey, Question } from '@/lib/types'
 import { buildReportData } from '@/lib/scoring'
 import { generateRoadmap } from '@/lib/roadmap'
 import { TIER_CONFIGS } from '@/components/TierBadge'
@@ -36,8 +36,9 @@ const RadarChartComponent = dynamic(() => import('@/components/RadarChartCompone
 })
 
 interface ReportScreenProps {
-  domain: Domain
-  persona: Persona
+  division: Division
+  functionArea: FunctionArea
+  level: Level
   questions: Question[]
   answers: Record<string, number>
   onRetake: () => void
@@ -57,15 +58,22 @@ const SEGMENT_ICONS: Record<SegmentKey, React.ReactNode> = {
   culture: <Compass className="w-4 h-4" />,
 }
 
-const PERSONA_LABELS: Record<Persona, string> = {
-  cto: 'CTO',
-  data_scientist: 'Lead Data Scientist',
-  hr: 'HR Lead',
+const DIVISION_LABELS: Record<Division, string> = {
+  mpi: 'MPI · Semiconductor',
+  hli: 'HLI · Automotive & Tiles',
+  hcib: 'HCIB · Cement & Building',
 }
 
-const DOMAIN_LABELS: Record<Domain, string> = {
-  martech: 'Marketing Technology (Martech)',
-  bfsi: 'Banking, Financial Services & Insurance (BFSI)',
+const FUNCTION_LABELS: Record<FunctionArea, string> = {
+  support: 'Support Functions',
+  ops: 'Manufacturing & Supply Chain',
+  commercial: 'Sales & Marketing',
+}
+
+const LEVEL_LABELS: Record<Level, string> = {
+  cxo: 'VP / CXO',
+  senior: 'Sr Manager / Director',
+  exec: 'Executive / Manager',
 }
 
 function ScoreRing({ score, size = 80 }: { score: number; size?: number }) {
@@ -93,13 +101,13 @@ function ScoreRing({ score, size = 80 }: { score: number; size?: number }) {
   )
 }
 
-export default function ReportScreen({ domain, persona, questions, answers, onRetake }: ReportScreenProps) {
+export default function ReportScreen({ division, functionArea, level, questions, answers, onRetake }: ReportScreenProps) {
   const [copied, setCopied] = useState(false)
   const reportRef = useRef<HTMLDivElement>(null)
 
-  const report = buildReportData(domain, persona, answers)
+  const report = buildReportData(division, functionArea, level, answers)
   const tierConfig = TIER_CONFIGS[report.tier]
-  const roadmap = generateRoadmap(answers, domain, persona)
+  const roadmap = generateRoadmap(answers)
 
   // Top 3 strengths and gaps across all questions
   const questionScores = questions.map((q) => ({
@@ -116,7 +124,7 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
 
   function handleShare() {
     try {
-      const shareState = { domain, persona, answers }
+      const shareState = { division, functionArea, level, answers }
       const encoded = btoa(encodeURIComponent(JSON.stringify(shareState)))
       const url = `${window.location.origin}${window.location.pathname}?state=${encoded}`
       navigator.clipboard.writeText(url).then(() => {
@@ -149,7 +157,7 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
               <Sparkles className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-bold text-white text-sm tracking-tight hidden sm:inline">
-              GenAI Maturity Index
+              AI Growth Readiness Assessment
             </span>
           </div>
 
@@ -214,10 +222,13 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
                 {/* Context tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-300">
-                    {DOMAIN_LABELS[domain]}
+                    {DIVISION_LABELS[division]}
                   </span>
                   <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-300">
-                    {PERSONA_LABELS[persona]}
+                    {FUNCTION_LABELS[functionArea]}
+                  </span>
+                  <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-300">
+                    {LEVEL_LABELS[level]}
                   </span>
                 </div>
 
@@ -402,12 +413,13 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
             <div className="h-px flex-1 bg-white/5" />
           </div>
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-white mb-1">Your AI Maturity Roadmap</h2>
+            <h2 className="text-xl font-bold text-white mb-1">Your AI Readiness Roadmap</h2>
             <p className="text-sm text-gray-400">
               Actions are prioritized by your lowest-scoring areas. Items in the Immediate and Short Term buckets
-              represent the highest-leverage opportunities for{' '}
-              <span className="text-blue-300 font-medium">{PERSONA_LABELS[persona]}</span> in a{' '}
-              <span className="text-blue-300 font-medium">{DOMAIN_LABELS[domain]}</span> context.
+              represent the highest-leverage opportunities for a{' '}
+              <span className="text-blue-300 font-medium">{LEVEL_LABELS[level]}</span> in{' '}
+              <span className="text-blue-300 font-medium">{FUNCTION_LABELS[functionArea]}</span> at{' '}
+              <span className="text-blue-300 font-medium">{DIVISION_LABELS[division]}</span>.
             </p>
           </div>
           <RoadmapTimeline roadmap={roadmap} />
@@ -475,7 +487,7 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
                 <RefreshCw className="w-7 h-7 group-hover:scale-110 transition-transform" />
                 <div>
                   <div className="font-bold text-sm">Retake Assessment</div>
-                  <div className="text-xs text-gray-400 mt-0.5">Try a different persona or domain</div>
+                  <div className="text-xs text-gray-400 mt-0.5">Try a different division, function, or level</div>
                 </div>
               </button>
             </div>
@@ -485,7 +497,7 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
         {/* Footer */}
         <footer className="text-center py-6 border-t border-white/5">
           <p className="text-xs text-gray-600">
-            GenAI &amp; Analytics Maturity Index • Results computed locally, no data stored externally
+            Powered by TransformTechX · AI Growth Readiness Framework · Confidential · Hong Leong Group Internal Use Only
           </p>
         </footer>
       </div>
