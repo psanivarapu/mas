@@ -1,0 +1,10 @@
+# Questionnaire: BFSI — Lead Data Scientist — Governance
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+I can access clean, labeled datasets (transaction, credit, claims) without significant data prep effort.
+Feature stores or reusable pipelines exist for common BFSI ML use cases (fraud, credit scoring).
+Data versioning is in place so I can reproduce model experiments end-to-end.
+I have full visibility into data lineage when debugging model or compliance issues.
+A model registry tracks all deployed models including training data, performance, and regulatory metadata.

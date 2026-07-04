@@ -1,0 +1,10 @@
+# Questionnaire: Martech — HR Lead — Technology
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+Marketing staff have access to intuitive AI-assisted tools that don't require coding skills.
+The organization provides licenses and access to modern analytics/GenAI tools for relevant roles.
+There is a process to evaluate and onboard new AI tools that employees request.
+IT support for AI tools is responsive and understands the marketing team's needs.
+Technology adoption is tracked, and underutilized tools are identified and addressed.

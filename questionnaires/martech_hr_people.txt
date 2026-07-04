@@ -1,0 +1,10 @@
+# Questionnaire: Martech — HR Lead — People
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+We have a clear AI skills taxonomy that guides hiring JDs and internal career paths.
+AI literacy training is available and attended by >50% of non-technical Martech staff.
+Performance management frameworks have been updated to reflect AI-related competencies.
+Employee satisfaction around AI tool adoption and training is regularly surveyed.
+We have a diversity strategy that intentionally builds AI teams with varied backgrounds.

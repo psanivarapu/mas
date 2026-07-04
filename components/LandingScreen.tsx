@@ -90,7 +90,7 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
           </div>
           <span className="font-bold text-white tracking-tight">GenAI Maturity Index</span>
         </div>
-        <div className="text-xs text-gray-500">20 questions • ~5 mins</div>
+        <div className="text-xs text-gray-500">Quick assessment • ~5 mins</div>
       </header>
 
       {/* Main content */}
@@ -208,7 +208,7 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
               </button>
               {canStart && (
                 <p className="text-center text-xs text-gray-500 mt-3">
-                  20 questions across 4 dimensions • Results in ~5 minutes
+                  A few quick questions across 4 dimensions • Results in ~5 minutes
                 </p>
               )}
             </div>

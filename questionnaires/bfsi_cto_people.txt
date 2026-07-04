@@ -1,0 +1,10 @@
+# Questionnaire: BFSI — CTO — People
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+We have sufficient data scientists, ML engineers, and AI architects with BFSI domain expertise.
+A skills matrix for AI roles is maintained and integrated into workforce planning.
+A structured AI upskilling program exists for both technical and business staff (e.g., risk, compliance, ops).
+C-suite and board-level stakeholders have sufficient AI literacy for informed decision-making.
+We have effective strategies to attract and retain specialized AI talent in a regulated industry.

@@ -1,0 +1,10 @@
+# Questionnaire: Martech — Lead Data Scientist — Culture
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+There is a clear process for prioritizing which AI/ML use cases to build and in what order.
+My team's work is recognized as strategic and tied to measurable business outcomes.
+Business teams are collaborative partners, not just requestors of models.
+Failed experiments are treated as learning opportunities, not career liabilities.
+I am included in strategic discussions about where AI can create competitive advantage.

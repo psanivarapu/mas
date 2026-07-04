@@ -1,0 +1,10 @@
+# Questionnaire: Martech — Lead Data Scientist — People
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+My team has strong proficiency in modern ML and GenAI techniques (fine-tuning, RAG, prompt engineering).
+There are dedicated data engineers who handle data pipeline work, freeing me to focus on modeling.
+Business stakeholders in marketing can communicate their problems in ways I can translate to ML tasks.
+I have access to external learning resources (courses, conferences, research) funded by the org.
+Junior data scientists on my team receive structured mentoring and growth opportunities.

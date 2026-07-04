@@ -1,0 +1,10 @@
+# Questionnaire: Martech — CTO — Culture
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+The C-suite has a documented AI strategy that is aligned with business goals and reviewed annually.
+There is executive sponsorship with budget authority for AI/GenAI initiatives.
+Cross-functional collaboration between marketing, data science, and IT is the norm, not the exception.
+We have a culture that encourages experimentation — including tolerance for failed AI pilots.
+AI ethics, responsible use policies, and bias review processes are formally defined and enforced.

@@ -19,10 +19,9 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import type { Domain, Persona, SegmentKey } from '@/lib/types'
+import type { Domain, Persona, SegmentKey, Question } from '@/lib/types'
 import { buildReportData } from '@/lib/scoring'
 import { generateRoadmap } from '@/lib/roadmap'
-import { getQuestions } from '@/lib/questions'
 import { TIER_CONFIGS } from '@/components/TierBadge'
 import SegmentCard from '@/components/SegmentCard'
 import RoadmapTimeline from '@/components/RoadmapTimeline'
@@ -39,6 +38,7 @@ const RadarChartComponent = dynamic(() => import('@/components/RadarChartCompone
 interface ReportScreenProps {
   domain: Domain
   persona: Persona
+  questions: Question[]
   answers: Record<string, number>
   onRetake: () => void
 }
@@ -93,14 +93,13 @@ function ScoreRing({ score, size = 80 }: { score: number; size?: number }) {
   )
 }
 
-export default function ReportScreen({ domain, persona, answers, onRetake }: ReportScreenProps) {
+export default function ReportScreen({ domain, persona, questions, answers, onRetake }: ReportScreenProps) {
   const [copied, setCopied] = useState(false)
   const reportRef = useRef<HTMLDivElement>(null)
 
   const report = buildReportData(domain, persona, answers)
   const tierConfig = TIER_CONFIGS[report.tier]
   const roadmap = generateRoadmap(answers, domain, persona)
-  const questions = getQuestions(domain, persona)
 
   // Top 3 strengths and gaps across all questions
   const questionScores = questions.map((q) => ({
@@ -313,8 +312,7 @@ export default function ReportScreen({ domain, persona, answers, onRetake }: Rep
                 segment={seg}
                 score={report.segmentScores[seg]}
                 answers={answers}
-                domain={domain}
-                persona={persona}
+                questions={questions}
               />
             ))}
           </div>

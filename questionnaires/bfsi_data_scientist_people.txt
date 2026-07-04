@@ -1,0 +1,10 @@
+# Questionnaire: BFSI — Lead Data Scientist — People
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+My team has strong expertise in both classical ML (for regulatory compliance) and modern GenAI techniques.
+Dedicated data engineers handle pipeline and infrastructure work so I can focus on modeling.
+Business stakeholders (risk, compliance, product) can articulate their problems in analytically useful terms.
+The organization funds access to research, courses, and industry conferences for my team.
+There is a structured mentoring program for junior team members.

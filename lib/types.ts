@@ -19,6 +19,8 @@ export interface AppState {
   currentScreen: Screen
   currentQuestion: number
   answers: Record<string, number>
+  questions: Question[]
+  questionsError: string | null
 }
 
 export interface TierConfig {

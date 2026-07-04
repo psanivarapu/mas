@@ -2,8 +2,7 @@
 
 import { Shield, Cpu, Users, Compass, CheckCircle, AlertTriangle, TrendingUp } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell } from 'recharts'
-import type { SegmentKey, Domain, Persona } from '@/lib/types'
-import { getQuestions } from '@/lib/questions'
+import type { SegmentKey, Question } from '@/lib/types'
 import { getScoreColor } from '@/lib/scoring'
 
 const SEGMENT_ICONS: Record<SegmentKey, React.ReactNode> = {
@@ -31,25 +30,16 @@ interface SegmentCardProps {
   segment: SegmentKey
   score: number
   answers: Record<string, number>
-  domain: Domain
-  persona: Persona
+  questions: Question[]
 }
 
-const PREFIX_MAP: Record<SegmentKey, string> = {
-  governance: 'gov',
-  technology: 'tech',
-  people: 'ppl',
-  culture: 'clt',
-}
-
-export default function SegmentCard({ segment, score, answers, domain, persona }: SegmentCardProps) {
+export default function SegmentCard({ segment, score, answers, questions: allQuestions }: SegmentCardProps) {
   const icon = SEGMENT_ICONS[segment]
   const name = SEGMENT_NAMES[segment]
   const color = SEGMENT_COLORS[segment]
   const scoreColor = getScoreColor(score)
-  const prefix = PREFIX_MAP[segment]
 
-  const questions = getQuestions(domain, persona).filter((q) => q.segment === segment)
+  const questions = allQuestions.filter((q) => q.segment === segment)
 
   const questionScores = questions.map((q) => ({
     text: q.text,

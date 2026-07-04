@@ -1,0 +1,10 @@
+# Questionnaire: BFSI — CTO — Technology
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+We have a scalable, secure data platform (cloud or hybrid) that supports advanced analytics and AI.
+Our core banking / insurance / trading systems integrate with AI/ML platforms via APIs.
+We can deploy models in real-time for risk scoring, fraud detection, or customer decisioning.
+GenAI capabilities (LLMs, document intelligence, copilots) are live in at least one production BFSI workflow.
+Our AI infrastructure includes model monitoring, explainability tooling, and automated retraining.

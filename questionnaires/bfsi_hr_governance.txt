@@ -1,0 +1,10 @@
+# Questionnaire: BFSI — HR Lead — Governance
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+Employees understand the sensitivity of financial/customer data and their obligations under regulation.
+Mandatory training on data handling, privacy, and AI usage exists for all relevant staff.
+Data stewardship roles are clearly defined and staffed in all business units.
+There are clear escalation paths for data quality, ethics, or compliance concerns.
+Leadership has communicated AI ethics standards, especially around automated decision-making.

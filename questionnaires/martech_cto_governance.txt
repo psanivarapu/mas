@@ -1,0 +1,10 @@
+# Questionnaire: Martech — CTO — Governance
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+Our marketing data assets (CRM, CDP, ad platforms) are catalogued with clear ownership and lineage.
+We have enforced data quality standards that are validated before any AI/ML model training.
+Privacy compliance (GDPR, DPDP) is embedded into our data pipelines, not bolted on.
+We have a data classification framework (PII, sensitive, public) applied across Martech data.
+AI/ML model governance — including versioning, drift monitoring, and audit trails — is formally established.

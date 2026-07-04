@@ -1,0 +1,10 @@
+# Questionnaire: BFSI — HR Lead — Culture
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+HR is represented in AI governance and strategy forums, not just tech-led committees.
+Change management frameworks exist for AI-driven process automation in BFSI workflows.
+Employee concerns about AI in HR decisions (recruitment AI, performance scoring) are actively addressed.
+The org has a published AI ethics charter and employees have received training on it.
+Cultural readiness for AI is measured in employee engagement surveys.

@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ArrowLeft, ArrowRight, Shield, Cpu, Users, Compass, ChevronRight, Sparkles } from 'lucide-react'
-import type { Domain, Persona, SegmentKey } from '@/lib/types'
-import { getQuestions, SEGMENT_CONFIGS } from '@/lib/questions'
+import type { Domain, Persona, SegmentKey, Question } from '@/lib/types'
+import { SEGMENT_CONFIGS } from '@/lib/questions'
 
 interface QuestionnaireScreenProps {
   domain: Domain
   persona: Persona
+  questions: Question[]
   answers: Record<string, number>
   onAnswer: (questionId: string, value: number) => void
   onComplete: () => void
@@ -26,13 +27,6 @@ const SEGMENT_COLORS: Record<SegmentKey, string> = {
   technology: 'from-cyan-500 to-blue-600',
   people: 'from-amber-500 to-orange-600',
   culture: 'from-emerald-500 to-teal-600',
-}
-
-const SEGMENT_ACCENT: Record<SegmentKey, string> = {
-  governance: 'text-violet-400',
-  technology: 'text-cyan-400',
-  people: 'text-amber-400',
-  culture: 'text-emerald-400',
 }
 
 const LIKERT_OPTIONS = [
@@ -57,29 +51,52 @@ const DOMAIN_LABELS: Record<Domain, string> = {
 export default function QuestionnaireScreen({
   domain,
   persona,
+  questions,
   answers,
   onAnswer,
   onComplete,
   onBack,
 }: QuestionnaireScreenProps) {
-  const questions = getQuestions(domain, persona)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [animating, setAnimating] = useState(false)
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward')
 
-  const question = questions[currentQuestion]
-  const currentSegmentIndex = Math.floor(currentQuestion / 5)
-  const currentSegment = SEGMENT_CONFIGS[currentSegmentIndex]
-  const answeredCount = Object.keys(answers).length
-  const progress = (answeredCount / 20) * 100
-  const currentAnswer = answers[question?.id]
-  const isLastQuestion = currentQuestion === 19
+  const totalQuestions = questions.length
 
-  const allAnswered = Object.keys(answers).length === 20
+  // Group questions by segment (in SEGMENT_CONFIGS order) so navigation adapts
+  // to however many questions are actually present per segment/file, rather
+  // than assuming a fixed count.
+  const segmentGroups = SEGMENT_CONFIGS.map((seg) => questions.filter((q) => q.segment === seg.key))
+  const segmentCounts = segmentGroups.map((g) => g.length)
+
+  function segmentStartIndex(segIdx: number) {
+    return segmentCounts.slice(0, segIdx).reduce((a, b) => a + b, 0)
+  }
+
+  function segmentIndexForQuestion(qIdx: number) {
+    let acc = 0
+    for (let i = 0; i < segmentCounts.length; i++) {
+      acc += segmentCounts[i]
+      if (qIdx < acc) return i
+    }
+    return Math.max(segmentCounts.length - 1, 0)
+  }
+
+  const question = questions[currentQuestion]
+  const currentSegmentIndex = segmentIndexForQuestion(currentQuestion)
+  const currentSegment = SEGMENT_CONFIGS[currentSegmentIndex]
+  const questionsInSegment = segmentCounts[currentSegmentIndex] ?? 0
+  const positionInSegment = currentQuestion - segmentStartIndex(currentSegmentIndex) + 1
+  const answeredCount = Object.keys(answers).length
+  const progress = totalQuestions > 0 ? (answeredCount / totalQuestions) * 100 : 0
+  const currentAnswer = answers[question?.id]
+  const isLastQuestion = currentQuestion === totalQuestions - 1
+
+  const allAnswered = totalQuestions > 0 && answeredCount === totalQuestions
 
   function navigate(delta: number) {
     const next = currentQuestion + delta
-    if (next < 0 || next > 19) return
+    if (next < 0 || next > totalQuestions - 1) return
     setDirection(delta > 0 ? 'forward' : 'backward')
     setAnimating(true)
     setTimeout(() => {
@@ -89,7 +106,7 @@ export default function QuestionnaireScreen({
   }
 
   function jumpToSegment(segmentIndex: number) {
-    const targetQ = segmentIndex * 5
+    const targetQ = segmentStartIndex(segmentIndex)
     setDirection(segmentIndex > currentSegmentIndex ? 'forward' : 'backward')
     setAnimating(true)
     setTimeout(() => {
@@ -102,15 +119,15 @@ export default function QuestionnaireScreen({
     if (!question) return
     onAnswer(question.id, value)
     // Auto-advance after a short delay
-    if (currentQuestion < 19) {
+    if (currentQuestion < totalQuestions - 1) {
       setTimeout(() => navigate(1), 350)
     }
   }
 
   function getSegmentStatus(segIdx: number) {
-    const segQuestions = questions.slice(segIdx * 5, segIdx * 5 + 5)
+    const segQuestions = segmentGroups[segIdx]
     const answered = segQuestions.filter((q) => answers[q.id] !== undefined).length
-    return { answered, total: 5, complete: answered === 5 }
+    return { answered, total: segQuestions.length, complete: segQuestions.length > 0 && answered === segQuestions.length }
   }
 
   if (!question) return null
@@ -140,7 +157,7 @@ export default function QuestionnaireScreen({
             </div>
             <div className="text-sm text-gray-400 font-medium">
               <span className="text-white font-bold">{currentQuestion + 1}</span>
-              <span className="text-gray-600"> / 20</span>
+              <span className="text-gray-600"> / {totalQuestions}</span>
             </div>
           </div>
 
@@ -173,7 +190,9 @@ export default function QuestionnaireScreen({
                   <span className="truncate">{seg.shortName}</span>
                   {status.complete && !isActive && <span className="text-emerald-400">✓</span>}
                   {!status.complete && !isActive && status.answered > 0 && (
-                    <span className="text-gray-600 text-xs">{status.answered}/5</span>
+                    <span className="text-gray-600 text-xs">
+                      {status.answered}/{status.total}
+                    </span>
                   )}
                 </button>
               )
@@ -192,7 +211,7 @@ export default function QuestionnaireScreen({
               <span>{currentSegment.name}</span>
             </div>
             <span className="text-xs text-gray-600">
-              Q{(currentQuestion % 5) + 1} of 5 in this segment
+              Q{positionInSegment} of {questionsInSegment} in this segment
             </span>
           </div>
 
@@ -255,8 +274,8 @@ export default function QuestionnaireScreen({
             </button>
 
             <div className="flex gap-1.5">
-              {Array.from({ length: 5 }, (_, i) => {
-                const qIdx = currentSegmentIndex * 5 + i
+              {Array.from({ length: questionsInSegment }, (_, i) => {
+                const qIdx = segmentStartIndex(currentSegmentIndex) + i
                 const q = questions[qIdx]
                 const isAnswered = q && answers[q.id] !== undefined
                 const isCurrent = qIdx === currentQuestion
@@ -290,12 +309,12 @@ export default function QuestionnaireScreen({
                 }`}
               >
                 <Sparkles className="w-4 h-4" />
-                {allAnswered ? 'View Results' : `${20 - Object.keys(answers).length} left`}
+                {allAnswered ? 'View Results' : `${totalQuestions - answeredCount} left`}
               </button>
             ) : (
               <button
                 onClick={() => navigate(1)}
-                disabled={currentQuestion === 19}
+                disabled={currentQuestion === totalQuestions - 1}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-all disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 Next

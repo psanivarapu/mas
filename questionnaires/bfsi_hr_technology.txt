@@ -1,0 +1,10 @@
+# Questionnaire: BFSI — HR Lead — Technology
+# One question per line. Lines starting with "#" are comments and are ignored.
+# Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
+# Changes are picked up immediately, no rebuild needed.
+
+Business and operations staff have access to no-code/low-code AI tools appropriate for their roles.
+The organization provides proper licensing for AI/analytics tools to all relevant employees.
+There is a formal process to evaluate employee-requested AI tools for security and compliance.
+IT support understands BFSI-specific compliance requirements when deploying AI tools.
+Technology adoption metrics are tracked, and training gaps linked to tool underuse are addressed.
