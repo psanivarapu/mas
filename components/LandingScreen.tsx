@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ArrowRight, ShoppingCart, Building2, BrainCircuit, FlaskConical, UserCheck, ChevronRight, Sparkles } from 'lucide-react'
 import type { Domain, Persona } from '@/lib/types'
+import { isCompanyEmail, isValidEmailFormat, buildRegistrationMailto } from '@/lib/registration'
 
 interface LandingScreenProps {
   onStart: (domain: Domain, persona: Persona) => void
@@ -61,10 +62,32 @@ const PERSONAS = [
 ]
 
 export default function LandingScreen({ onStart }: LandingScreenProps) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [role, setRole] = useState('')
+  const [touched, setTouched] = useState(false)
   const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null)
   const [selectedPersona, setSelectedPersona] = useState<Persona | null>(null)
 
-  const canStart = selectedDomain !== null && selectedPersona !== null
+  const emailValid = isCompanyEmail(email)
+  const emailFormatValid = isValidEmailFormat(email)
+  const detailsValid = name.trim().length > 0 && emailValid && role.trim().length > 0
+  const canStart = detailsValid && selectedDomain !== null && selectedPersona !== null
+
+  const handleBegin = () => {
+    if (!detailsValid) {
+      setTouched(true)
+      return
+    }
+    if (!canStart) return
+    window.location.href = buildRegistrationMailto(
+      name.trim(),
+      email.trim(),
+      role.trim(),
+      `Domain: ${selectedDomain}\nPersona: ${selectedPersona}`
+    )
+    onStart(selectedDomain!, selectedPersona!)
+  }
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -112,11 +135,56 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
           </div>
 
           <div className="space-y-8 animate-slide-up">
-            {/* Step 1: Domain */}
+            {/* Step 1: Your Details */}
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white shrink-0">
                   1
+                </div>
+                <h2 className="text-lg font-bold text-white">Your Details</h2>
+              </div>
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your full name"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-400/60"
+                />
+                <div>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onBlur={() => setTouched(true)}
+                    placeholder="Company email address"
+                    className={`w-full px-4 py-3 rounded-xl bg-white/5 border text-white placeholder:text-gray-500 focus:outline-none ${
+                      touched && email.length > 0 && !emailValid
+                        ? 'border-red-500/60 focus:border-red-400/70'
+                        : 'border-white/10 focus:border-blue-400/60'
+                    }`}
+                  />
+                  {touched && email.length > 0 && !emailValid && (
+                    <p className="text-xs text-red-400 mt-1.5">
+                      {emailFormatValid ? 'Please use your company email address, not a personal gmail.com address.' : 'Enter a valid email address.'}
+                    </p>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  placeholder="Your role / title"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-400/60"
+                />
+              </div>
+            </div>
+
+            {/* Step 2: Domain */}
+            <div className={`transition-all duration-300 ${detailsValid ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${detailsValid ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-400'}`}>
+                  2
                 </div>
                 <h2 className="text-lg font-bold text-white">Select your Business Domain</h2>
               </div>
@@ -158,11 +226,11 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
               </div>
             </div>
 
-            {/* Step 2: Persona */}
-            <div className={`transition-all duration-300 ${selectedDomain ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
+            {/* Step 3: Persona */}
+            <div className={`transition-all duration-300 ${detailsValid && selectedDomain ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${selectedDomain ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-400'}`}>
-                  2
+                  3
                 </div>
                 <h2 className="text-lg font-bold text-white">Select your Persona</h2>
               </div>
@@ -197,11 +265,11 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
             </div>
 
             {/* CTA */}
-            <div className={`transition-all duration-300 pt-2 ${canStart ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
+            <div className="pt-2">
               <button
-                onClick={() => canStart && onStart(selectedDomain!, selectedPersona!)}
+                onClick={handleBegin}
                 disabled={!canStart}
-                className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold text-lg rounded-2xl transition-all duration-200 flex items-center justify-center gap-3 shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 disabled:cursor-not-allowed glow-blue"
+                className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold text-lg rounded-2xl transition-all duration-200 flex items-center justify-center gap-3 shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 disabled:opacity-40 disabled:cursor-not-allowed glow-blue"
               >
                 Begin Assessment
                 <ArrowRight className="w-5 h-5" />
