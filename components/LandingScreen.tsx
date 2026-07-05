@@ -49,7 +49,7 @@ export default function LandingScreen({ onProceed }: LandingScreenProps) {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-white tracking-tight">GenAI Maturity Index</span>
+          <span className="font-bold text-white tracking-tight">AI Growth Readiness and Maturity Index</span>
         </div>
         <div className="text-xs text-gray-500">Quick assessment • ~5 mins</div>
       </header>
@@ -64,8 +64,8 @@ export default function LandingScreen({ onProceed }: LandingScreenProps) {
               Free Assessment
             </div>
             <h1 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight tracking-tight">
-              GenAI &amp; Analytics<br />
-              <span className="gradient-text">Maturity Index</span>
+              AI Growth Readiness<br />
+              <span className="gradient-text">and Maturity Index</span>
             </h1>
             <p className="text-lg text-gray-400 max-w-xl mx-auto leading-relaxed">
               Understand where your organization stands. Know where to go next.

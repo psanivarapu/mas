@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'GenAI & Analytics Maturity Index',
+  title: 'AI Growth Readiness and Maturity Index',
   description:
     'Understand where your organization stands on AI & analytics maturity. Know where to go next.',
   keywords: ['AI maturity', 'analytics maturity', 'GenAI assessment', 'BFSI', 'Martech'],
   openGraph: {
-    title: 'GenAI & Analytics Maturity Index',
+    title: 'AI Growth Readiness and Maturity Index',
     description: 'Assess your organization\'s AI & analytics maturity in minutes.',
     type: 'website',
   },

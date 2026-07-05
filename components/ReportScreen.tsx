@@ -149,7 +149,7 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
               <Sparkles className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-bold text-white text-sm tracking-tight hidden sm:inline">
-              GenAI Maturity Index
+              AI Growth Readiness and Maturity Index
             </span>
           </div>
 
@@ -485,7 +485,7 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
         {/* Footer */}
         <footer className="text-center py-6 border-t border-white/5">
           <p className="text-xs text-gray-600">
-            GenAI &amp; Analytics Maturity Index • Results computed locally, no data stored externally
+            AI Growth Readiness and Maturity Index • Results computed locally, no data stored externally
           </p>
         </footer>
       </div>

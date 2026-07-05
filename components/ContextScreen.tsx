@@ -88,7 +88,7 @@ export default function ContextScreen({ onSubmit }: ContextScreenProps) {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-white tracking-tight">GenAI Maturity Index</span>
+          <span className="font-bold text-white tracking-tight">AI Growth Readiness and Maturity Index</span>
         </div>
         <div className="text-xs text-gray-500">Quick assessment • ~5 mins</div>
       </header>
