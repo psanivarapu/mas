@@ -103,6 +103,7 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onBlur={() => setTouched(true)}
                 placeholder="Company email address"
                 className={`w-full px-4 py-3 rounded-xl bg-white/5 border text-white placeholder:text-gray-500 focus:outline-none ${
                   touched && email.length > 0 && !emailValid
