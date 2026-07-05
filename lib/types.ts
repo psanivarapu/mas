@@ -1,6 +1,6 @@
 export type Domain = 'martech' | 'bfsi'
 export type Persona = 'cto' | 'data_scientist' | 'hr'
-export type Screen = 'landing' | 'questionnaire' | 'report'
+export type Screen = 'landing' | 'context' | 'questionnaire' | 'report'
 export type Tier = 'bee' | 'elephant' | 'dolphin' | 'unicorn'
 export type SegmentKey = 'governance' | 'technology' | 'people' | 'culture'
 export type TimeBucket = 'immediate' | 'short' | 'medium' | 'long'

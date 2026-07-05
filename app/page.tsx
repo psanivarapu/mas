@@ -4,11 +4,13 @@ import { useReducer, useEffect } from 'react'
 import type { Domain, Persona, AppState, Question } from '@/lib/types'
 import { fetchQuestions } from '@/lib/questions'
 import LandingScreen from '@/components/LandingScreen'
+import ContextScreen from '@/components/ContextScreen'
 import QuestionnaireScreen from '@/components/QuestionnaireScreen'
 import ReportScreen from '@/components/ReportScreen'
 
 type Action =
-  | { type: 'START'; domain: Domain; persona: Persona }
+  | { type: 'PROCEED' }
+  | { type: 'SET_CONTEXT'; domain: Domain; persona: Persona }
   | { type: 'ANSWER'; questionId: string; value: number }
   | { type: 'COMPLETE' }
   | { type: 'RETAKE' }
@@ -28,11 +30,14 @@ const INITIAL_STATE: AppState = {
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
-    case 'START':
+    case 'PROCEED':
+      return { ...state, currentScreen: 'context' }
+    case 'SET_CONTEXT':
       return {
-        ...INITIAL_STATE,
+        ...state,
         domain: action.domain,
         persona: action.persona,
+        answers: {},
         currentScreen: 'questionnaire',
       }
     case 'ANSWER':
@@ -43,10 +48,10 @@ function reducer(state: AppState, action: Action): AppState {
     case 'COMPLETE':
       return { ...state, currentScreen: 'report' }
     case 'RETAKE':
-      return INITIAL_STATE
+      return { ...INITIAL_STATE, questions: state.questions }
     case 'RESTORE':
       return {
-        ...INITIAL_STATE,
+        ...state,
         domain: action.domain,
         persona: action.persona,
         answers: action.answers,
@@ -116,10 +121,14 @@ export default function Home() {
     }
   }, [state.domain, state.persona, state.questions.length])
 
-  if (state.currentScreen === 'landing' || !state.domain || !state.persona) {
+  if (state.currentScreen === 'landing') {
+    return <LandingScreen onProceed={() => dispatch({ type: 'PROCEED' })} />
+  }
+
+  if (state.currentScreen === 'context') {
     return (
-      <LandingScreen
-        onStart={(domain, persona) => dispatch({ type: 'START', domain, persona })}
+      <ContextScreen
+        onSubmit={(domain, persona) => dispatch({ type: 'SET_CONTEXT', domain, persona })}
       />
     )
   }
@@ -149,7 +158,7 @@ export default function Home() {
     )
   }
 
-  if (state.currentScreen === 'questionnaire') {
+  if (state.currentScreen === 'questionnaire' && state.domain && state.persona) {
     return (
       <QuestionnaireScreen
         domain={state.domain}
@@ -163,7 +172,7 @@ export default function Home() {
     )
   }
 
-  if (state.currentScreen === 'report') {
+  if (state.currentScreen === 'report' && state.domain && state.persona) {
     return (
       <ReportScreen
         domain={state.domain}
