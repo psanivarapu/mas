@@ -1,12 +1,32 @@
 'use client'
 
+import { useState } from 'react'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { isCompanyEmail, isValidEmailFormat, buildRegistrationMailto } from '@/lib/registration'
 
 interface LandingScreenProps {
   onStart: () => void
 }
 
 export default function LandingScreen({ onStart }: LandingScreenProps) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [role, setRole] = useState('')
+  const [touched, setTouched] = useState(false)
+
+  const emailValid = isCompanyEmail(email)
+  const emailFormatValid = isValidEmailFormat(email)
+  const canStart = name.trim().length > 0 && emailValid && role.trim().length > 0
+
+  const handleBegin = () => {
+    if (!canStart) {
+      setTouched(true)
+      return
+    }
+    window.location.href = buildRegistrationMailto(name.trim(), email.trim(), role.trim())
+    onStart()
+  }
+
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background decoration */}
@@ -68,9 +88,52 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
             </div>
           </div>
 
+          <div className="w-full max-w-md mx-auto text-left mb-8 space-y-3">
+            <div>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your full name"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-400/60"
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Company email address"
+                className={`w-full px-4 py-3 rounded-xl bg-white/5 border text-white placeholder:text-gray-500 focus:outline-none ${
+                  touched && email.length > 0 && !emailValid
+                    ? 'border-red-500/60 focus:border-red-400/70'
+                    : 'border-white/10 focus:border-blue-400/60'
+                }`}
+              />
+              {touched && email.length > 0 && !emailValid && (
+                <p className="text-xs text-red-400 mt-1.5">
+                  {emailFormatValid ? 'Please use your company email address, not a personal gmail.com address.' : 'Enter a valid email address.'}
+                </p>
+              )}
+            </div>
+            <div>
+              <input
+                type="text"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                placeholder="Your role / title"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-400/60"
+              />
+            </div>
+          </div>
+
           <button
-            onClick={onStart}
-            className="py-4 px-9 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold text-lg rounded-2xl transition-all duration-200 inline-flex items-center justify-center gap-3 shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 glow-blue"
+            onClick={handleBegin}
+            className={`py-4 px-9 font-bold text-lg rounded-2xl transition-all duration-200 inline-flex items-center justify-center gap-3 shadow-lg glow-blue ${
+              canStart
+                ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white shadow-blue-600/25 hover:shadow-blue-500/35'
+                : 'bg-white/10 text-gray-400 shadow-none cursor-not-allowed'
+            }`}
           >
             Begin Assessment
             <ArrowRight className="w-5 h-5" />
