@@ -5,7 +5,7 @@ const FROM_ADDRESS = 'labs@transformtechx.com'
 const NOTIFY_RECIPIENTS = ['labs@transformtechx.com', 'amit@transformtechx.com']
 
 function getClient(): Resend {
-  const apiKey = process.env.RESEND_API_KEY
+  const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) throw new Error('RESEND_API_KEY is not configured')
   return new Resend(apiKey)
 }
