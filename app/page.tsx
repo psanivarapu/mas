@@ -1,15 +1,16 @@
 'use client'
 
 import { useReducer, useEffect } from 'react'
-import type { Domain, Persona, AppState, Question } from '@/lib/types'
+import type { Domain, Persona, AppState, Question, Registrant } from '@/lib/types'
 import { fetchQuestions } from '@/lib/questions'
+import { buildReportData } from '@/lib/scoring'
 import LandingScreen from '@/components/LandingScreen'
 import ContextScreen from '@/components/ContextScreen'
 import QuestionnaireScreen from '@/components/QuestionnaireScreen'
 import ReportScreen from '@/components/ReportScreen'
 
 type Action =
-  | { type: 'PROCEED' }
+  | { type: 'PROCEED'; registrant: Registrant }
   | { type: 'SET_CONTEXT'; domain: Domain; persona: Persona }
   | { type: 'ANSWER'; questionId: string; value: number }
   | { type: 'COMPLETE' }
@@ -26,12 +27,13 @@ const INITIAL_STATE: AppState = {
   answers: {},
   questions: [],
   questionsError: null,
+  registrant: null,
 }
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'PROCEED':
-      return { ...state, currentScreen: 'context' }
+      return { ...state, registrant: action.registrant, currentScreen: 'context' }
     case 'SET_CONTEXT':
       return {
         ...state,
@@ -122,7 +124,11 @@ export default function Home() {
   }, [state.domain, state.persona, state.questions.length])
 
   if (state.currentScreen === 'landing') {
-    return <LandingScreen onProceed={() => dispatch({ type: 'PROCEED' })} />
+    return (
+      <LandingScreen
+        onProceed={(name, email, role) => dispatch({ type: 'PROCEED', registrant: { name, email, role } })}
+      />
+    )
   }
 
   if (state.currentScreen === 'context') {
@@ -166,7 +172,24 @@ export default function Home() {
         questions={state.questions}
         answers={state.answers}
         onAnswer={(questionId, value) => dispatch({ type: 'ANSWER', questionId, value })}
-        onComplete={() => dispatch({ type: 'COMPLETE' })}
+        onComplete={() => {
+          if (state.registrant && state.domain && state.persona) {
+            const report = buildReportData(state.domain, state.persona, state.answers)
+            fetch('/api/notify/report', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                ...state.registrant,
+                domain: state.domain,
+                persona: state.persona,
+                overallScore: report.overallScore,
+                tier: report.tier,
+                segmentScores: report.segmentScores,
+              }),
+            }).catch(() => {})
+          }
+          dispatch({ type: 'COMPLETE' })
+        }}
         onBack={() => dispatch({ type: 'RETAKE' })}
       />
     )
