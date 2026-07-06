@@ -1,15 +1,16 @@
 'use client'
 
 import { useReducer, useEffect } from 'react'
-import type { Division, FunctionArea, Level, AppState, Question } from '@/lib/types'
+import type { Division, FunctionArea, Level, AppState, Question, Registrant } from '@/lib/types'
 import { fetchQuestions } from '@/lib/questions'
+import { buildReportData } from '@/lib/scoring'
 import LandingScreen from '@/components/LandingScreen'
 import ContextScreen from '@/components/ContextScreen'
 import QuestionnaireScreen from '@/components/QuestionnaireScreen'
 import ReportScreen from '@/components/ReportScreen'
 
 type Action =
-  | { type: 'START' }
+  | { type: 'START'; registrant: Registrant }
   | { type: 'SET_CONTEXT'; division: Division; functionArea: FunctionArea; level: Level }
   | { type: 'ANSWER'; questionId: string; value: number }
   | { type: 'COMPLETE' }
@@ -33,12 +34,13 @@ const INITIAL_STATE: AppState = {
   answers: {},
   questions: [],
   questionsError: null,
+  registrant: null,
 }
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'START':
-      return { ...state, currentScreen: 'context' }
+      return { ...state, registrant: action.registrant, currentScreen: 'context' }
     case 'SET_CONTEXT':
       return {
         ...state,
@@ -133,7 +135,11 @@ export default function Home() {
   }, [state.questions.length])
 
   if (state.currentScreen === 'landing') {
-    return <LandingScreen onStart={() => dispatch({ type: 'START' })} />
+    return (
+      <LandingScreen
+        onStart={(name, email, role) => dispatch({ type: 'START', registrant: { name, email, role } })}
+      />
+    )
   }
 
   if (state.currentScreen === 'context') {
@@ -178,7 +184,25 @@ export default function Home() {
         questions={state.questions}
         answers={state.answers}
         onAnswer={(questionId, value) => dispatch({ type: 'ANSWER', questionId, value })}
-        onComplete={() => dispatch({ type: 'COMPLETE' })}
+        onComplete={() => {
+          if (state.registrant && state.division && state.functionArea && state.level) {
+            const report = buildReportData(state.division, state.functionArea, state.level, state.answers)
+            fetch('/api/notify/report', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                ...state.registrant,
+                division: state.division,
+                functionArea: state.functionArea,
+                level: state.level,
+                overallScore: report.overallScore,
+                tier: report.tier,
+                segmentScores: report.segmentScores,
+              }),
+            }).catch(() => {})
+          }
+          dispatch({ type: 'COMPLETE' })
+        }}
         onBack={() => dispatch({ type: 'RETAKE' })}
       />
     )

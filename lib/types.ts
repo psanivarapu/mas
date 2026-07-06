@@ -14,6 +14,12 @@ export interface Question {
   globalIndex: number
 }
 
+export interface Registrant {
+  name: string
+  email: string
+  role: string
+}
+
 export interface AppState {
   division: Division | null
   functionArea: FunctionArea | null
@@ -23,6 +29,7 @@ export interface AppState {
   answers: Record<string, number>
   questions: Question[]
   questionsError: string | null
+  registrant: Registrant | null
 }
 
 export interface TierConfig {

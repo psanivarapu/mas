@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import { ArrowRight, Sparkles } from 'lucide-react'
-import { isCompanyEmail, isValidEmailFormat, buildRegistrationMailto } from '@/lib/registration'
+import { isCompanyEmail, isValidEmailFormat } from '@/lib/registration'
 
 interface LandingScreenProps {
-  onStart: () => void
+  onStart: (name: string, email: string, role: string) => void
 }
 
 export default function LandingScreen({ onStart }: LandingScreenProps) {
@@ -23,8 +23,15 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
       setTouched(true)
       return
     }
-    window.location.href = buildRegistrationMailto(name.trim(), email.trim(), role.trim())
-    onStart()
+    const trimmedName = name.trim()
+    const trimmedEmail = email.trim()
+    const trimmedRole = role.trim()
+    fetch('/api/notify/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: trimmedName, email: trimmedEmail, role: trimmedRole }),
+    }).catch(() => {})
+    onStart(trimmedName, trimmedEmail, trimmedRole)
   }
 
   return (
