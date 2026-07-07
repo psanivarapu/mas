@@ -12,7 +12,7 @@ export function computeSegmentScore(answers: Record<string, number>, segment: Se
   const scores: number[] = []
   for (let i = 1; i <= 5; i++) {
     const val = answers[`${prefix}_${i}`]
-    if (val !== undefined) scores.push(val)
+    if (val !== undefined && val > 0) scores.push(val)
   }
   if (scores.length === 0) return 0
   const avg = scores.reduce((a, b) => a + b, 0) / scores.length
@@ -65,6 +65,7 @@ export function getScoreLabel(score: number): string {
 }
 
 export function getAnswerLabel(val: number): string {
+  if (val === 0) return "Not Applicable / Don't Know"
   const labels: Record<number, string> = {
     1: 'Strongly Disagree',
     2: 'Disagree',

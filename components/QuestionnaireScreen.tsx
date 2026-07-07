@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import { ArrowLeft, ArrowRight, Shield, Cpu, Users, Compass, ChevronRight, Sparkles } from 'lucide-react'
 import type { Domain, Persona, SegmentKey, Question } from '@/lib/types'
+import { NA_VALUE } from '@/lib/types'
 import { SEGMENT_CONFIGS } from '@/lib/questions'
+import { getAnswerLabel } from '@/lib/scoring'
 
 interface QuestionnaireScreenProps {
   domain: Domain
@@ -251,11 +253,23 @@ export default function QuestionnaireScreen({
                 })}
               </div>
 
+              {/* NA / Don't Know option */}
+              <button
+                onClick={() => handleAnswer(NA_VALUE)}
+                className={`likert-btn w-full py-2.5 px-4 rounded-xl border-2 transition-all font-medium text-sm ${
+                  currentAnswer === NA_VALUE
+                    ? 'selected border-gray-400 bg-gray-500/20 text-gray-300'
+                    : 'border-white/10 bg-white/5 text-gray-500 hover:border-gray-400/40 hover:bg-gray-500/10 hover:text-gray-300'
+                }`}
+              >
+                Not Applicable / Don&apos;t Know
+              </button>
+
               {/* Answer indicator */}
               <div className="h-5 flex items-center justify-center">
-                {currentAnswer && (
+                {currentAnswer !== undefined && (
                   <p className="text-xs text-blue-400 animate-fade-in">
-                    Selected: <span className="font-semibold">{LIKERT_OPTIONS[currentAnswer - 1]?.label.replace('\n', ' ')}</span>
+                    Selected: <span className="font-semibold">{getAnswerLabel(currentAnswer)}</span>
                   </p>
                 )}
               </div>

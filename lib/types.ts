@@ -6,6 +6,10 @@ export type SegmentKey = 'governance' | 'technology' | 'people' | 'culture'
 export type TimeBucket = 'immediate' | 'short' | 'medium' | 'long'
 export type Effort = 'Low' | 'Medium' | 'High'
 
+// Sentinel answer value meaning "Not Applicable / Don't Know" — distinct
+// from an unanswered question (absent key) and excluded from scoring averages.
+export const NA_VALUE = 0
+
 export interface Question {
   id: string
   text: string

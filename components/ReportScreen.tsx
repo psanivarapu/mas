@@ -109,8 +109,11 @@ export default function ReportScreen({ domain, persona, questions, answers, onRe
     score: answers[q.id] ?? 0,
   }))
 
-  const topStrengths = [...questionScores].sort((a, b) => b.score - a.score).slice(0, 3)
-  const topGaps = [...questionScores].sort((a, b) => a.score - b.score).slice(0, 3)
+  // Exclude NA/Don't Know (score 0) answers — they aren't real scores and
+  // shouldn't surface as either a strength or a gap.
+  const scorableQuestions = questionScores.filter((q) => q.score > 0)
+  const topStrengths = [...scorableQuestions].sort((a, b) => b.score - a.score).slice(0, 3)
+  const topGaps = [...scorableQuestions].sort((a, b) => a.score - b.score).slice(0, 3)
 
   const segments: SegmentKey[] = ['governance', 'technology', 'people', 'culture']
 

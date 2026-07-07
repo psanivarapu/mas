@@ -512,7 +512,10 @@ export function generateRoadmap(
   const questionIds = Object.keys(TEMPLATES)
 
   for (const questionId of questionIds) {
-    const score = answers[questionId] ?? 3
+    const rawScore = answers[questionId]
+    // Unanswered or NA/Don't Know (0) is treated as neutral for prioritization
+    // purposes, rather than assumed to be the worst score.
+    const score = rawScore === undefined || rawScore === 0 ? 3 : rawScore
     const bucket = scoreToBucket(score)
     const template = TEMPLATES[questionId]
 

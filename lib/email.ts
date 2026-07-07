@@ -30,11 +30,12 @@ interface ReportEmailParams {
   overallScore: number
   tier: Tier
   segmentScores: Record<SegmentKey, number>
+  pdfBuffer: Buffer
 }
 
 export async function sendReportEmail(params: ReportEmailParams): Promise<void> {
   const resend = getClient()
-  const { name, email, role, domain, persona, overallScore, tier, segmentScores } = params
+  const { name, email, role, domain, persona, overallScore, tier, segmentScores, pdfBuffer } = params
   const text = [
     `Name: ${name}`,
     `Email: ${email}`,
@@ -47,12 +48,20 @@ export async function sendReportEmail(params: ReportEmailParams): Promise<void> 
     `Technology: ${segmentScores.technology}`,
     `People: ${segmentScores.people}`,
     `Culture: ${segmentScores.culture}`,
+    '',
+    'Full report attached as PDF.',
   ].join('\n')
   const { error } = await resend.emails.send({
     from: FROM_ADDRESS,
     to: NOTIFY_RECIPIENTS,
     subject: 'Assessment completed',
     text,
+    attachments: [
+      {
+        filename: 'ai-maturity-assessment-report.pdf',
+        content: pdfBuffer,
+      },
+    ],
   })
   if (error) throw new Error(error.message)
 }
