@@ -3,7 +3,6 @@
 import { useReducer, useEffect } from 'react'
 import type { Division, FunctionArea, Level, AppState, Question, Registrant } from '@/lib/types'
 import { fetchQuestions } from '@/lib/questions'
-import { buildReportData } from '@/lib/scoring'
 import LandingScreen from '@/components/LandingScreen'
 import ContextScreen from '@/components/ContextScreen'
 import QuestionnaireScreen from '@/components/QuestionnaireScreen'
@@ -186,7 +185,6 @@ export default function Home() {
         onAnswer={(questionId, value) => dispatch({ type: 'ANSWER', questionId, value })}
         onComplete={() => {
           if (state.registrant && state.division && state.functionArea && state.level) {
-            const report = buildReportData(state.division, state.functionArea, state.level, state.answers)
             fetch('/api/notify/report', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -195,9 +193,7 @@ export default function Home() {
                 division: state.division,
                 functionArea: state.functionArea,
                 level: state.level,
-                overallScore: report.overallScore,
-                tier: report.tier,
-                segmentScores: report.segmentScores,
+                answers: state.answers,
               }),
             }).catch(() => {})
           }

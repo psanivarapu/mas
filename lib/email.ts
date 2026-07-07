@@ -5,7 +5,7 @@ const FROM_ADDRESS = 'labs@transformtechx.com'
 const NOTIFY_RECIPIENTS = ['labs@transformtechx.com', 'amit@transformtechx.com']
 
 function getClient(): Resend {
-  const apiKey = process.env.RESEND_API_KEY
+  const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) throw new Error('RESEND_API_KEY is not configured')
   return new Resend(apiKey)
 }
@@ -31,11 +31,12 @@ interface ReportEmailParams {
   overallScore: number
   tier: Tier
   segmentScores: Record<SegmentKey, number>
+  pdfBuffer: Buffer
 }
 
 export async function sendReportEmail(params: ReportEmailParams): Promise<void> {
   const resend = getClient()
-  const { name, email, role, division, functionArea, level, overallScore, tier, segmentScores } = params
+  const { name, email, role, division, functionArea, level, overallScore, tier, segmentScores, pdfBuffer } = params
   const text = [
     `Name: ${name}`,
     `Email: ${email}`,
@@ -49,12 +50,20 @@ export async function sendReportEmail(params: ReportEmailParams): Promise<void> 
     `Technology: ${segmentScores.technology}`,
     `People: ${segmentScores.people}`,
     `Culture: ${segmentScores.culture}`,
+    '',
+    'Full report attached as PDF.',
   ].join('\n')
   const { error } = await resend.emails.send({
     from: FROM_ADDRESS,
     to: NOTIFY_RECIPIENTS,
     subject: 'AI Readiness Assessment completed',
     text,
+    attachments: [
+      {
+        filename: 'ai-readiness-assessment-report.pdf',
+        content: pdfBuffer,
+      },
+    ],
   })
   if (error) throw new Error(error.message)
 }

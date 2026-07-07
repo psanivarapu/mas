@@ -54,7 +54,7 @@ export default function SegmentCard({ segment, score, answers, questions: allQue
     .slice(0, 2)
 
   const gaps = questionScores
-    .filter((q) => q.score <= 2)
+    .filter((q) => q.score > 0 && q.score <= 2)
     .sort((a, b) => a.score - b.score)
     .slice(0, 2)
 
@@ -109,7 +109,11 @@ export default function SegmentCard({ segment, score, answers, questions: allQue
             <YAxis domain={[0, 100]} hide />
             <Bar dataKey="score" radius={[3, 3, 0, 0]}>
               {barData.map((entry, index) => (
-                <Cell key={index} fill={getScoreColor(entry.rawScore * 20)} fillOpacity={0.85} />
+                <Cell
+                  key={index}
+                  fill={entry.rawScore === 0 ? '#6B7280' : getScoreColor(entry.rawScore * 20)}
+                  fillOpacity={0.85}
+                />
               ))}
             </Bar>
           </BarChart>
