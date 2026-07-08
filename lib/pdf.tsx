@@ -2,7 +2,7 @@ import { Document, Page, View, Text, StyleSheet, Svg, Polygon, Line, renderToBuf
 import type { Division, FunctionArea, Level, SegmentKey, Question, ReportData, RoadmapItem, TimeBucket, Tier } from './types'
 import { getScoreColor, getScoreLabel, getAnswerLabel } from './scoring'
 import { BUCKET_LABELS } from './roadmap'
-import { TIER_CONFIGS } from '@/components/TierBadge'
+import { TIER_CONFIGS } from '@/lib/tiers'
 
 const DIVISION_LABELS: Record<Division, string> = {
   mpi: 'MPI · Semiconductor',
