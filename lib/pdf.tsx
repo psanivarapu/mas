@@ -2,7 +2,7 @@ import { Document, Page, View, Text, StyleSheet, Svg, Polygon, Line, renderToBuf
 import type { Domain, Persona, SegmentKey, Question, ReportData, RoadmapItem, TimeBucket, Tier } from './types'
 import { getScoreColor, getScoreLabel, getAnswerLabel } from './scoring'
 import { BUCKET_LABELS } from './roadmap'
-import { TIER_CONFIGS } from '@/components/TierBadge'
+import { TIER_CONFIGS } from '@/lib/tiers'
 
 const DOMAIN_LABELS: Record<Domain, string> = {
   martech: 'Marketing Technology (Martech)',
