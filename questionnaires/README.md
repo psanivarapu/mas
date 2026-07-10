@@ -8,10 +8,14 @@ no rebuild or restart required.
 ## One shared question set
 
 Unlike a per-audience question bank, this assessment uses a **single shared
-20-question set** across all 27 Division × Function × Level combinations.
-Selecting a Division (MPI / HLI / HCIB), Function (Support / Manufacturing &
-Supply Chain / Sales & Marketing), and Level (VP/CXO / Sr Manager-Director /
-Executive-Manager) personalizes labels and the report narrative — it does not
+20-question set** across every Company/Subsidiary × Business Function ×
+Persona combination. Selecting a Company (HLMG Management Co. / Hong Leong
+Industries Berhad / Hume Cement Industries Berhad / Malaysian Pacific
+Industries, plus their subsidiaries), Business Function (General Management /
+Support Functions / Sales-Marketing-Commercial-Customer Service /
+Manufacturing-Supply Chain-Operations-Logistics / Digital Solutions
+Delivery), and Persona (Senior Leadership / People Managers /
+Manager-Executive) personalizes labels and the report narrative — it does not
 change which questions are asked.
 
 ## Files

@@ -19,12 +19,13 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import type { Division, FunctionArea, Level, SegmentKey, Question } from '@/lib/types'
+import type { CompanySelection, BusinessFunction, Persona, SegmentKey, Question } from '@/lib/types'
 import { buildReportData } from '@/lib/scoring'
 import { generateRoadmap } from '@/lib/roadmap'
 import { TIER_CONFIGS } from '@/components/TierBadge'
 import SegmentCard from '@/components/SegmentCard'
 import RoadmapTimeline from '@/components/RoadmapTimeline'
+import { companyLabel, BUSINESS_FUNCTION_LABELS, PERSONA_LABELS } from '@/lib/context'
 
 const RadarChartComponent = dynamic(() => import('@/components/RadarChartComponent'), {
   ssr: false,
@@ -36,9 +37,9 @@ const RadarChartComponent = dynamic(() => import('@/components/RadarChartCompone
 })
 
 interface ReportScreenProps {
-  division: Division
-  functionArea: FunctionArea
-  level: Level
+  company: CompanySelection
+  businessFunction: BusinessFunction
+  persona: Persona
   questions: Question[]
   answers: Record<string, number>
   onRetake: () => void
@@ -56,24 +57,6 @@ const SEGMENT_ICONS: Record<SegmentKey, React.ReactNode> = {
   technology: <Cpu className="w-4 h-4" />,
   people: <Users className="w-4 h-4" />,
   culture: <Compass className="w-4 h-4" />,
-}
-
-const DIVISION_LABELS: Record<Division, string> = {
-  mpi: 'MPI · Semiconductor',
-  hli: 'HLI · Automotive & Tiles',
-  hcib: 'HCIB · Cement & Building',
-}
-
-const FUNCTION_LABELS: Record<FunctionArea, string> = {
-  support: 'Support Functions',
-  ops: 'Manufacturing & Supply Chain',
-  commercial: 'Sales & Marketing',
-}
-
-const LEVEL_LABELS: Record<Level, string> = {
-  cxo: 'VP / CXO',
-  senior: 'Sr Manager / Director',
-  exec: 'Executive / Manager',
 }
 
 function ScoreRing({ score, size = 80 }: { score: number; size?: number }) {
@@ -101,11 +84,11 @@ function ScoreRing({ score, size = 80 }: { score: number; size?: number }) {
   )
 }
 
-export default function ReportScreen({ division, functionArea, level, questions, answers, onRetake }: ReportScreenProps) {
+export default function ReportScreen({ company, businessFunction, persona, questions, answers, onRetake }: ReportScreenProps) {
   const [copied, setCopied] = useState(false)
   const reportRef = useRef<HTMLDivElement>(null)
 
-  const report = buildReportData(division, functionArea, level, answers)
+  const report = buildReportData(company, businessFunction, persona, answers)
   const tierConfig = TIER_CONFIGS[report.tier]
   const roadmap = generateRoadmap(answers)
 
@@ -127,7 +110,7 @@ export default function ReportScreen({ division, functionArea, level, questions,
 
   function handleShare() {
     try {
-      const shareState = { division, functionArea, level, answers }
+      const shareState = { company, businessFunction, persona, answers }
       const encoded = btoa(encodeURIComponent(JSON.stringify(shareState)))
       const url = `${window.location.origin}${window.location.pathname}?state=${encoded}`
       navigator.clipboard.writeText(url).then(() => {
@@ -225,13 +208,13 @@ export default function ReportScreen({ division, functionArea, level, questions,
                 {/* Context tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-300">
-                    {DIVISION_LABELS[division]}
+                    {companyLabel(company)}
                   </span>
                   <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-300">
-                    {FUNCTION_LABELS[functionArea]}
+                    {BUSINESS_FUNCTION_LABELS[businessFunction]}
                   </span>
                   <span className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-300">
-                    {LEVEL_LABELS[level]}
+                    {PERSONA_LABELS[persona]}
                   </span>
                 </div>
 
@@ -420,9 +403,9 @@ export default function ReportScreen({ division, functionArea, level, questions,
             <p className="text-sm text-gray-400">
               Actions are prioritized by your lowest-scoring areas. Items in the Immediate and Short Term buckets
               represent the highest-leverage opportunities for a{' '}
-              <span className="text-blue-300 font-medium">{LEVEL_LABELS[level]}</span> in{' '}
-              <span className="text-blue-300 font-medium">{FUNCTION_LABELS[functionArea]}</span> at{' '}
-              <span className="text-blue-300 font-medium">{DIVISION_LABELS[division]}</span>.
+              <span className="text-blue-300 font-medium">{PERSONA_LABELS[persona]}</span> in{' '}
+              <span className="text-blue-300 font-medium">{BUSINESS_FUNCTION_LABELS[businessFunction]}</span> at{' '}
+              <span className="text-blue-300 font-medium">{companyLabel(company)}</span>.
             </p>
           </div>
           <RoadmapTimeline roadmap={roadmap} />
@@ -490,7 +473,7 @@ export default function ReportScreen({ division, functionArea, level, questions,
                 <RefreshCw className="w-7 h-7 group-hover:scale-110 transition-transform" />
                 <div>
                   <div className="font-bold text-sm">Retake Assessment</div>
-                  <div className="text-xs text-gray-400 mt-0.5">Try a different division, function, or level</div>
+                  <div className="text-xs text-gray-400 mt-0.5">Try a different company, function, or persona</div>
                 </div>
               </button>
             </div>

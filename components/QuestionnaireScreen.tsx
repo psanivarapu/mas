@@ -2,15 +2,16 @@
 
 import { useState } from 'react'
 import { ArrowLeft, ArrowRight, Shield, Cpu, Users, Compass, ChevronRight, Sparkles } from 'lucide-react'
-import type { Division, FunctionArea, Level, SegmentKey, Question } from '@/lib/types'
+import type { CompanySelection, BusinessFunction, Persona, SegmentKey, Question } from '@/lib/types'
 import { NA_VALUE } from '@/lib/types'
 import { SEGMENT_CONFIGS } from '@/lib/questions'
 import { getAnswerLabel } from '@/lib/scoring'
+import { companyLabel, BUSINESS_FUNCTION_LABELS, PERSONA_LABELS } from '@/lib/context'
 
 interface QuestionnaireScreenProps {
-  division: Division
-  functionArea: FunctionArea
-  level: Level
+  company: CompanySelection
+  businessFunction: BusinessFunction
+  persona: Persona
   questions: Question[]
   answers: Record<string, number>
   onAnswer: (questionId: string, value: number) => void
@@ -40,28 +41,10 @@ const LIKERT_OPTIONS = [
   { value: 5, label: 'Strongly\nAgree', short: '5' },
 ]
 
-const DIVISION_LABELS: Record<Division, string> = {
-  mpi: 'MPI',
-  hli: 'HLI',
-  hcib: 'HCIB',
-}
-
-const FUNCTION_LABELS: Record<FunctionArea, string> = {
-  support: 'Support Functions',
-  ops: 'Manufacturing & Supply Chain',
-  commercial: 'Sales & Marketing',
-}
-
-const LEVEL_LABELS: Record<Level, string> = {
-  cxo: 'VP / CXO',
-  senior: 'Sr Manager / Director',
-  exec: 'Executive / Manager',
-}
-
 export default function QuestionnaireScreen({
-  division,
-  functionArea,
-  level,
+  company,
+  businessFunction,
+  persona,
   questions,
   answers,
   onAnswer,
@@ -159,15 +142,15 @@ export default function QuestionnaireScreen({
             </button>
             <div className="hidden md:flex items-center gap-2 text-xs text-gray-500">
               <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10">
-                {DIVISION_LABELS[division]}
+                {companyLabel(company)}
               </span>
               <span className="text-gray-600">•</span>
               <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10">
-                {FUNCTION_LABELS[functionArea]}
+                {BUSINESS_FUNCTION_LABELS[businessFunction]}
               </span>
               <span className="text-gray-600">•</span>
               <span className="px-2 py-1 rounded-md bg-white/5 border border-white/10">
-                {LEVEL_LABELS[level]}
+                {PERSONA_LABELS[persona]}
               </span>
             </div>
             <div className="text-sm text-gray-400 font-medium">

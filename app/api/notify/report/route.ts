@@ -11,9 +11,9 @@ import { renderReportPdf } from '@/lib/pdf'
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
-  const { name, email, role, division, functionArea, level, answers } = await request.json()
+  const { name, email, role, company, businessFunction, persona, answers } = await request.json()
 
-  if (!name || !email || !role || !division || !functionArea || !level || !answers) {
+  if (!name || !email || !role || !company || !businessFunction || !persona || !answers) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
@@ -28,16 +28,16 @@ export async function POST(request: NextRequest) {
     }
     const questions = buildQuestions(sections)
 
-    const report = buildReportData(division, functionArea, level, answers)
+    const report = buildReportData(company, businessFunction, persona, answers)
     const roadmap = generateRoadmap(answers)
 
     const pdfBuffer = await renderReportPdf({
       name,
       email,
       role,
-      division,
-      functionArea,
-      level,
+      company,
+      businessFunction,
+      persona,
       questions,
       answers,
       report,
@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
       name,
       email,
       role,
-      division,
-      functionArea,
-      level,
+      company,
+      businessFunction,
+      persona,
       overallScore: report.overallScore,
       tier: report.tier,
       segmentScores: report.segmentScores,

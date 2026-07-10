@@ -1,7 +1,7 @@
 'use client'
 
 import { useReducer, useEffect } from 'react'
-import type { Division, FunctionArea, Level, AppState, Question, Registrant } from '@/lib/types'
+import type { CompanySelection, BusinessFunction, Persona, AppState, Question, Registrant } from '@/lib/types'
 import { fetchQuestions } from '@/lib/questions'
 import LandingScreen from '@/components/LandingScreen'
 import ContextScreen from '@/components/ContextScreen'
@@ -10,24 +10,24 @@ import ReportScreen from '@/components/ReportScreen'
 
 type Action =
   | { type: 'START'; registrant: Registrant }
-  | { type: 'SET_CONTEXT'; division: Division; functionArea: FunctionArea; level: Level }
+  | { type: 'SET_CONTEXT'; company: CompanySelection; businessFunction: BusinessFunction; persona: Persona }
   | { type: 'ANSWER'; questionId: string; value: number }
   | { type: 'COMPLETE' }
   | { type: 'RETAKE' }
   | {
       type: 'RESTORE'
-      division: Division
-      functionArea: FunctionArea
-      level: Level
+      company: CompanySelection
+      businessFunction: BusinessFunction
+      persona: Persona
       answers: Record<string, number>
     }
   | { type: 'QUESTIONS_LOADED'; questions: Question[] }
   | { type: 'QUESTIONS_ERROR'; message: string }
 
 const INITIAL_STATE: AppState = {
-  division: null,
-  functionArea: null,
-  level: null,
+  company: null,
+  businessFunction: null,
+  persona: null,
   currentScreen: 'landing',
   currentQuestion: 0,
   answers: {},
@@ -43,9 +43,9 @@ function reducer(state: AppState, action: Action): AppState {
     case 'SET_CONTEXT':
       return {
         ...state,
-        division: action.division,
-        functionArea: action.functionArea,
-        level: action.level,
+        company: action.company,
+        businessFunction: action.businessFunction,
+        persona: action.persona,
         answers: {},
         currentScreen: 'questionnaire',
       }
@@ -61,9 +61,9 @@ function reducer(state: AppState, action: Action): AppState {
     case 'RESTORE':
       return {
         ...state,
-        division: action.division,
-        functionArea: action.functionArea,
-        level: action.level,
+        company: action.company,
+        businessFunction: action.businessFunction,
+        persona: action.persona,
         answers: action.answers,
         currentScreen: 'report',
       }
@@ -88,17 +88,17 @@ export default function Home() {
 
     try {
       const decoded = JSON.parse(decodeURIComponent(atob(stateParam))) as {
-        division: Division
-        functionArea: FunctionArea
-        level: Level
+        company: CompanySelection
+        businessFunction: BusinessFunction
+        persona: Persona
         answers: Record<string, number>
       }
-      if (decoded.division && decoded.functionArea && decoded.level && decoded.answers) {
+      if (decoded.company && decoded.businessFunction && decoded.persona && decoded.answers) {
         dispatch({
           type: 'RESTORE',
-          division: decoded.division,
-          functionArea: decoded.functionArea,
-          level: decoded.level,
+          company: decoded.company,
+          businessFunction: decoded.businessFunction,
+          persona: decoded.persona,
           answers: decoded.answers,
         })
         // Clean URL without reload
@@ -109,7 +109,7 @@ export default function Home() {
     }
   }, [])
 
-  // The question set is shared across every Division/Function/Level
+  // The question set is shared across every Company/Business Function/Persona
   // combination, so it's loaded once, independent of context selection.
   useEffect(() => {
     if (state.questions.length > 0) return
@@ -144,7 +144,9 @@ export default function Home() {
   if (state.currentScreen === 'context') {
     return (
       <ContextScreen
-        onSubmit={(division, functionArea, level) => dispatch({ type: 'SET_CONTEXT', division, functionArea, level })}
+        onSubmit={(company, businessFunction, persona) =>
+          dispatch({ type: 'SET_CONTEXT', company, businessFunction, persona })
+        }
       />
     )
   }
@@ -174,25 +176,25 @@ export default function Home() {
     )
   }
 
-  if (state.currentScreen === 'questionnaire' && state.division && state.functionArea && state.level) {
+  if (state.currentScreen === 'questionnaire' && state.company && state.businessFunction && state.persona) {
     return (
       <QuestionnaireScreen
-        division={state.division}
-        functionArea={state.functionArea}
-        level={state.level}
+        company={state.company}
+        businessFunction={state.businessFunction}
+        persona={state.persona}
         questions={state.questions}
         answers={state.answers}
         onAnswer={(questionId, value) => dispatch({ type: 'ANSWER', questionId, value })}
         onComplete={() => {
-          if (state.registrant && state.division && state.functionArea && state.level) {
+          if (state.registrant && state.company && state.businessFunction && state.persona) {
             fetch('/api/notify/report', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 ...state.registrant,
-                division: state.division,
-                functionArea: state.functionArea,
-                level: state.level,
+                company: state.company,
+                businessFunction: state.businessFunction,
+                persona: state.persona,
                 answers: state.answers,
               }),
             }).catch(() => {})
@@ -204,12 +206,12 @@ export default function Home() {
     )
   }
 
-  if (state.currentScreen === 'report' && state.division && state.functionArea && state.level) {
+  if (state.currentScreen === 'report' && state.company && state.businessFunction && state.persona) {
     return (
       <ReportScreen
-        division={state.division}
-        functionArea={state.functionArea}
-        level={state.level}
+        company={state.company}
+        businessFunction={state.businessFunction}
+        persona={state.persona}
         questions={state.questions}
         answers={state.answers}
         onRetake={() => dispatch({ type: 'RETAKE' })}

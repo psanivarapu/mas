@@ -4,11 +4,11 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'AI Growth Readiness Assessment — Hong Leong Group',
   description:
-    'Understand where your division stands on AI readiness across Governance, Technology, People, and Culture.',
+    'Understand where your company stands on AI readiness across Governance, Technology, People, and Culture.',
   keywords: ['AI readiness', 'AI maturity', 'Hong Leong Group', 'TransformTechX'],
   openGraph: {
     title: 'AI Growth Readiness Assessment — Hong Leong Group',
-    description: 'Assess your division\'s AI readiness in minutes.',
+    description: 'Assess your company\'s AI readiness in minutes.',
     type: 'website',
   },
 }

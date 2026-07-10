@@ -1,11 +1,11 @@
 # Questionnaire: Governance
 # One question per line. Lines starting with "#" are comments and are ignored.
 # Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
-# This question set is shared across all Division / Function / Level
+# This question set is shared across all Company / Business Function / Persona
 # combinations. Changes are picked up immediately, no rebuild needed.
 
-Our production, supply chain, and financial data are catalogued with clear ownership and lineage across the Group.
-We have enforced data quality standards that are validated before use in any analytics or AI initiative.
-Data privacy and regulatory compliance (e.g., PDPA, industry-specific regulations) are embedded into how we collect and manage data.
-Sensitive data (customer, supplier, financial, HR) is classified and access is properly governed across our systems.
-AI/analytics models used in production or decision-making have formal governance — ownership, monitoring, and audit trails.
+Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.
+Business teams can find, understand, and self-serve trusted data through a governed catalog.
+Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.
+Data from plants, machines, and ERP is unified into one trusted enterprise view.
+Quality, yield, and supply data is consistent and reconciled across sites and systems.

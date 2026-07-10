@@ -1,11 +1,11 @@
 # Questionnaire: Culture
 # One question per line. Lines starting with "#" are comments and are ignored.
 # Blank lines are ignored. Keep exactly 5 lines — scoring reads positions 1-5.
-# This question set is shared across all Division / Function / Level
+# This question set is shared across all Company / Business Function / Persona
 # combinations. Changes are picked up immediately, no rebuild needed.
 
-There is a clear, documented AI/analytics strategy for our division that ties to business priorities.
-There is executive sponsorship and budget commitment behind AI/analytics initiatives.
-Collaboration between business teams, IT, and data/analytics teams is the norm rather than the exception.
-Our culture tolerates experimentation, including AI pilots that do not succeed on the first try.
-We have clear expectations around responsible and ethical use of AI, including bias and fairness considerations.
+Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.
+We run an experiment-and-measure culture where every major initiative is judged on ROI.
+We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.
+We use demand and channel signals to plan production and go-to-market together.
+New process and automation ideas are piloted with clear ROI before scaling across sites.

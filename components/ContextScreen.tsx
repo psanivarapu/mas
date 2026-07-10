@@ -2,65 +2,15 @@
 
 import { useState } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
-import type { Division, FunctionArea, Level } from '@/lib/types'
+import type { MainCompany, Subsidiary, BusinessFunction, Persona, CompanySelection } from '@/lib/types'
+import { MAIN_COMPANIES, SUBSIDIARIES_BY_COMPANY, BUSINESS_FUNCTIONS, PERSONAS } from '@/lib/context'
 
 interface ContextScreenProps {
-  onSubmit: (division: Division, functionArea: FunctionArea, level: Level) => void
+  onSubmit: (company: CompanySelection, businessFunction: BusinessFunction, persona: Persona) => void
 }
 
-const DIVISIONS: { id: Division; name: string; sub: string; icon: string; description: string }[] = [
-  {
-    id: 'mpi',
-    name: 'MPI',
-    sub: 'Semiconductor',
-    icon: '🔬',
-    description: 'Malaysian Pacific Industries — IC packaging, precision testing, electronics manufacturing',
-  },
-  {
-    id: 'hli',
-    name: 'HLI',
-    sub: 'Automotive & Tiles',
-    icon: '🏍️',
-    description: 'Yamaha Motor, fibre cement boards, ceramic tiles — multi-product industrial manufacturing',
-  },
-  {
-    id: 'hcib',
-    name: 'HCIB',
-    sub: 'Cement & Building',
-    icon: '🏗️',
-    description: 'Hume Cement — ready-mix concrete, aggregates, building products',
-  },
-]
-
-const FUNCTIONS: { id: FunctionArea; name: string; sub: string; icon: string; description: string }[] = [
-  {
-    id: 'support',
-    name: 'Support Functions',
-    sub: 'Finance · HR · Procurement',
-    icon: '🗂️',
-    description: 'Enabling functions — cost ops, workforce planning, vendor management, compliance',
-  },
-  {
-    id: 'ops',
-    name: 'Manufacturing & Supply Chain',
-    sub: 'Ops · Production · Logistics',
-    icon: '⚙️',
-    description: 'Plant floor, quality control, demand planning, inventory, supplier operations',
-  },
-  {
-    id: 'commercial',
-    name: 'Sales & Marketing',
-    sub: 'Revenue · Trade · Distribution',
-    icon: '📈',
-    description: 'Channel strategy, pricing, customer analytics, distributor performance',
-  },
-]
-
-const LEVELS: { id: Level; name: string; sub: string }[] = [
-  { id: 'cxo', name: 'VP / CXO', sub: 'Strategic decisions, P&L ownership' },
-  { id: 'senior', name: 'Sr Manager / Director', sub: 'Function leadership, team management' },
-  { id: 'exec', name: 'Executive / Manager', sub: 'Day-to-day operations, team member' },
-]
+const SELECT_CLASSES =
+  'w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-blue-400/60 disabled:opacity-40 disabled:cursor-not-allowed appearance-none'
 
 function StepLabel({ num, title, done }: { num: number; title: string; done: boolean }) {
   return (
@@ -79,11 +29,27 @@ function StepLabel({ num, title, done }: { num: number; title: string; done: boo
 }
 
 export default function ContextScreen({ onSubmit }: ContextScreenProps) {
-  const [division, setDivision] = useState<Division | null>(null)
-  const [functionArea, setFunctionArea] = useState<FunctionArea | null>(null)
-  const [level, setLevel] = useState<Level | null>(null)
+  const [mainCompany, setMainCompany] = useState<MainCompany | null>(null)
+  const [subsidiary, setSubsidiary] = useState<Subsidiary | null>(null)
+  const [businessFunction, setBusinessFunction] = useState<BusinessFunction | null>(null)
+  const [persona, setPersona] = useState<Persona | null>(null)
 
-  const canStart = division !== null && functionArea !== null && level !== null
+  const availableSubsidiaries = mainCompany ? SUBSIDIARIES_BY_COMPANY[mainCompany] : []
+  const needsSubsidiary = availableSubsidiaries.length > 0
+  const companyComplete = mainCompany !== null && (!needsSubsidiary || subsidiary !== null)
+  const functionComplete = businessFunction !== null
+  const canStart = companyComplete && functionComplete && persona !== null
+
+  function handleMainCompanyChange(value: string) {
+    setMainCompany((value || null) as MainCompany | null)
+    setSubsidiary(null)
+  }
+
+  function handleSubmit() {
+    if (!mainCompany || !businessFunction || !persona || !canStart) return
+    const company: CompanySelection = { mainCompany, subsidiary }
+    onSubmit(company, businessFunction, persona)
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -103,95 +69,97 @@ export default function ContextScreen({ onSubmit }: ContextScreenProps) {
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-10">
         <h1 className="text-2xl sm:text-3xl font-black text-white text-center mb-2">Select your context</h1>
         <p className="text-sm text-gray-500 text-center mb-10">
-          Your answers will be tailored to your division, function, and level.
+          Your answers will be tailored to your company, business function, and persona.
         </p>
 
-        {/* Step 1: Division */}
+        {/* Step 1: Company */}
         <div className="mb-8">
-          <StepLabel num={1} title="Select your Division" done={division !== null} />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {DIVISIONS.map((d) => {
-              const isSelected = division === d.id
-              return (
-                <button
-                  key={d.id}
-                  onClick={() => setDivision(d.id)}
-                  className={`relative text-left p-4 rounded-2xl border-2 transition-all duration-200 ${
-                    isSelected
-                      ? 'border-blue-400 bg-blue-500/10'
-                      : 'border-white/10 bg-white/3 hover:border-blue-500/40 hover:bg-white/5'
-                  }`}
-                >
-                  {isSelected && (
-                    <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                  <span className="text-xl mb-2 block">{d.icon}</span>
-                  <div className="font-bold text-white text-sm">{d.name}</div>
-                  <div className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-1.5">{d.sub}</div>
-                  <p className="text-xs text-gray-500 leading-relaxed">{d.description}</p>
-                </button>
-              )
-            })}
+          <StepLabel num={1} title="Select your Company" done={companyComplete} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Company
+              </label>
+              <select
+                value={mainCompany ?? ''}
+                onChange={(e) => handleMainCompanyChange(e.target.value)}
+                className={SELECT_CLASSES}
+              >
+                <option value="" disabled>
+                  Select your company
+                </option>
+                {MAIN_COMPANIES.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                Subsidiary
+              </label>
+              <select
+                value={subsidiary ?? ''}
+                onChange={(e) => setSubsidiary((e.target.value || null) as Subsidiary | null)}
+                disabled={!needsSubsidiary}
+                className={SELECT_CLASSES}
+              >
+                <option value="" disabled>
+                  {needsSubsidiary ? 'Select your subsidiary' : 'Not applicable'}
+                </option>
+                {availableSubsidiaries.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
         <div className="h-px bg-white/5 mb-8" />
 
-        {/* Step 2: Function */}
-        <div className={`mb-8 transition-opacity duration-300 ${division ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
-          <StepLabel num={2} title="Select your Function" done={functionArea !== null} />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {FUNCTIONS.map((f) => {
-              const isSelected = functionArea === f.id
-              return (
-                <button
-                  key={f.id}
-                  onClick={() => setFunctionArea(f.id)}
-                  disabled={!division}
-                  className={`relative text-left p-4 rounded-2xl border-2 transition-all duration-200 ${
-                    isSelected
-                      ? 'border-blue-400 bg-blue-500/10'
-                      : 'border-white/10 bg-white/3 hover:border-blue-500/40 hover:bg-white/5'
-                  }`}
-                >
-                  {isSelected && (
-                    <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                  <span className="text-xl mb-2 block">{f.icon}</span>
-                  <div className="font-bold text-white text-sm">{f.name}</div>
-                  <div className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-1.5">{f.sub}</div>
-                  <p className="text-xs text-gray-500 leading-relaxed">{f.description}</p>
-                </button>
-              )
-            })}
-          </div>
+        {/* Step 2: Business Function */}
+        <div className={`mb-8 transition-opacity duration-300 ${companyComplete ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
+          <StepLabel num={2} title="Select your Business Function" done={functionComplete} />
+          <select
+            value={businessFunction ?? ''}
+            onChange={(e) => setBusinessFunction((e.target.value || null) as BusinessFunction | null)}
+            disabled={!companyComplete}
+            className={SELECT_CLASSES}
+          >
+            <option value="" disabled>
+              Select your business function
+            </option>
+            {BUSINESS_FUNCTIONS.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="h-px bg-white/5 mb-8" />
 
-        {/* Step 3: Level */}
-        <div className={`mb-10 transition-opacity duration-300 ${functionArea ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
-          <StepLabel num={3} title="Select your Level" done={level !== null} />
+        {/* Step 3: Persona */}
+        <div className={`mb-10 transition-opacity duration-300 ${functionComplete ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
+          <StepLabel num={3} title="Select your Persona" done={persona !== null} />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {LEVELS.map((l) => {
-              const isSelected = level === l.id
+            {PERSONAS.map((p) => {
+              const isSelected = persona === p.id
               return (
                 <button
-                  key={l.id}
-                  onClick={() => setLevel(l.id)}
-                  disabled={!functionArea}
+                  key={p.id}
+                  onClick={() => setPersona(p.id)}
+                  disabled={!functionComplete}
                   className={`text-center p-4 rounded-xl border-2 transition-all duration-200 ${
                     isSelected
                       ? 'border-blue-400 bg-blue-500/10'
                       : 'border-white/10 bg-white/3 hover:border-blue-500/40 hover:bg-white/5'
                   }`}
                 >
-                  <div className="font-bold text-white text-sm mb-1">{l.name}</div>
-                  <div className="text-xs text-gray-500">{l.sub}</div>
+                  <div className="font-bold text-white text-sm">{p.name}</div>
                 </button>
               )
             })}
@@ -201,7 +169,7 @@ export default function ContextScreen({ onSubmit }: ContextScreenProps) {
         {/* CTA */}
         <div className={`text-center transition-opacity duration-300 ${canStart ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
           <button
-            onClick={() => canStart && onSubmit(division!, functionArea!, level!)}
+            onClick={handleSubmit}
             disabled={!canStart}
             className="py-3.5 px-8 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-bold rounded-2xl transition-all duration-200 inline-flex items-center gap-2 shadow-lg shadow-blue-600/25"
           >

@@ -1,0 +1,141 @@
+Industry,Pillar,Q#,Scope,Statement,Sub-tag,Difficulty
+"BFSI (Banking, Financial Services & Insurance)",Data Governance,1,Shared,Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.,Foundational Tech Build,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Data Governance,2,Shared,"Business teams can find, understand, and self-serve trusted data through a governed catalog.",Data & AI,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Data Governance,3,Shared,"Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.",Foundational Tech Build,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Data Governance,4,Custom,"Customer transaction and KYC data is unified across core banking, cards, and channels into one governed view.",Foundational Tech Build,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Data Governance,5,Custom,"Risk, fraud, and regulatory reporting draw from the same certified data, so compliance numbers always reconcile.",Data & AI,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Technology,6,Shared,"At least one AI/ML model runs in production today, powering a named business workflow beyond a pilot.",Data & AI,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Technology,7,Shared,Our teams build and change their own dashboards and reports through self-serve analytics.,Foundational Tech Build,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Technology,8,Shared,"Intelligent automation or an AI agent already handles a real, recurring task in our operations.",Data & AI,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Technology,9,Custom,We use AI for real-time fraud detection or credit decisioning inside live customer journeys.,Data & AI,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Technology,10,Custom,"Customers self-serve through AI-assisted channels for onboarding, servicing, and support.",MarTech,Foundational
+"BFSI (Banking, Financial Services & Insurance)",People,11,Shared,We have in-house data and AI talent who design and ship solutions end-to-end.,Training & Enablement,Foundational
+"BFSI (Banking, Financial Services & Insurance)",People,12,Shared,"A structured upskilling program is driving broad, confident AI adoption across our teams.",Training & Enablement,Foundational
+"BFSI (Banking, Financial Services & Insurance)",People,13,Shared,Our leaders are data-fluent and routinely make decisions from evidence.,Culture & Adoption,Foundational
+"BFSI (Banking, Financial Services & Insurance)",People,14,Custom,Our relationship and operations teams trust and act on AI-driven risk and next-best-action guidance.,Training & Enablement,Foundational
+"BFSI (Banking, Financial Services & Insurance)",People,15,Custom,"Compliance and risk leaders actively shape our AI roadmap, so innovation and controls advance together.",Culture & Adoption,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Culture & Strategy,16,Shared,Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.,Growth/Revenue,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Culture & Strategy,17,Shared,We run an experiment-and-measure culture where every major initiative is judged on ROI.,Growth/Revenue,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Culture & Strategy,18,Shared,"We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.",MarTech,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Culture & Strategy,19,Custom,We use behavioral and propensity signals to grow wallet share and cross-sell.,Growth/Revenue,Foundational
+"BFSI (Banking, Financial Services & Insurance)",Culture & Strategy,20,Custom,New products and pricing are validated with controlled experiments before full rollout.,Growth/Revenue,Foundational
+FMCG & Retail,Data Governance,1,Shared,Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.,Foundational Tech Build,Foundational
+FMCG & Retail,Data Governance,2,Shared,"Business teams can find, understand, and self-serve trusted data through a governed catalog.",Data & AI,Foundational
+FMCG & Retail,Data Governance,3,Shared,"Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.",Foundational Tech Build,Foundational
+FMCG & Retail,Data Governance,4,Custom,"Sales, inventory, and consumer data flow from every channel and distributor into one trusted view.",Foundational Tech Build,Foundational
+FMCG & Retail,Data Governance,5,Custom,"We resolve consumer and product identities cleanly across retail, ecommerce, and loyalty touchpoints.",Data & AI,Foundational
+FMCG & Retail,Technology,6,Shared,"At least one AI/ML model runs in production today, powering a named business workflow beyond a pilot.",Data & AI,Foundational
+FMCG & Retail,Technology,7,Shared,Our teams build and change their own dashboards and reports through self-serve analytics.,Foundational Tech Build,Foundational
+FMCG & Retail,Technology,8,Shared,"Intelligent automation or an AI agent already handles a real, recurring task in our operations.",Data & AI,Foundational
+FMCG & Retail,Technology,9,Custom,We use AI for demand forecasting or assortment and inventory optimization in live planning.,Data & AI,Foundational
+FMCG & Retail,Technology,10,Custom,Trade promotions and pricing are optimized with models as part of our planning cycle.,Growth/Revenue,Foundational
+FMCG & Retail,People,11,Shared,We have in-house data and AI talent who design and ship solutions end-to-end.,Training & Enablement,Foundational
+FMCG & Retail,People,12,Shared,"A structured upskilling program is driving broad, confident AI adoption across our teams.",Training & Enablement,Foundational
+FMCG & Retail,People,13,Shared,Our leaders are data-fluent and routinely make decisions from evidence.,Culture & Adoption,Foundational
+FMCG & Retail,People,14,Custom,Our category and sales teams confidently use analytics to plan promotions and ranging.,Training & Enablement,Foundational
+FMCG & Retail,People,15,Custom,Brand and marketing leaders champion data-driven decisions across the portfolio.,Culture & Adoption,Foundational
+FMCG & Retail,Culture & Strategy,16,Shared,Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.,Growth/Revenue,Foundational
+FMCG & Retail,Culture & Strategy,17,Shared,We run an experiment-and-measure culture where every major initiative is judged on ROI.,Growth/Revenue,Foundational
+FMCG & Retail,Culture & Strategy,18,Shared,"We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.",MarTech,Foundational
+FMCG & Retail,Culture & Strategy,19,Custom,"We close the loop on promotions and loyalty, attributing measurable sales lift to specific shopper segments.",MarTech,Foundational
+FMCG & Retail,Culture & Strategy,20,Custom,"We continuously test pricing, packs, and promotions and scale what measurably works.",Growth/Revenue,Foundational
+Pharma & Life Sciences,Data Governance,1,Shared,Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.,Foundational Tech Build,Foundational
+Pharma & Life Sciences,Data Governance,2,Shared,"Business teams can find, understand, and self-serve trusted data through a governed catalog.",Data & AI,Foundational
+Pharma & Life Sciences,Data Governance,3,Shared,"Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.",Foundational Tech Build,Foundational
+Pharma & Life Sciences,Data Governance,4,Custom,"Commercial, medical, and supply-chain data is unified into one governed, GxP-aware view.",Foundational Tech Build,Foundational
+Pharma & Life Sciences,Data Governance,5,Custom,Our data lineage and quality meet validation and regulatory scrutiny as a matter of routine.,Data & AI,Foundational
+Pharma & Life Sciences,Technology,6,Shared,"At least one AI/ML model runs in production today, powering a named business workflow beyond a pilot.",Data & AI,Foundational
+Pharma & Life Sciences,Technology,7,Shared,Our teams build and change their own dashboards and reports through self-serve analytics.,Foundational Tech Build,Foundational
+Pharma & Life Sciences,Technology,8,Shared,"Intelligent automation or an AI agent already handles a real, recurring task in our operations.",Data & AI,Foundational
+Pharma & Life Sciences,Technology,9,Custom,"We use AI in a live workflow such as HCP engagement, patient support, or supply forecasting.",Data & AI,Foundational
+Pharma & Life Sciences,Technology,10,Custom,Field and medical teams receive next-best-action guidance surfaced in their daily tools.,MarTech,Foundational
+Pharma & Life Sciences,People,11,Shared,We have in-house data and AI talent who design and ship solutions end-to-end.,Training & Enablement,Foundational
+Pharma & Life Sciences,People,12,Shared,"A structured upskilling program is driving broad, confident AI adoption across our teams.",Training & Enablement,Foundational
+Pharma & Life Sciences,People,13,Shared,Our leaders are data-fluent and routinely make decisions from evidence.,Culture & Adoption,Foundational
+Pharma & Life Sciences,People,14,Custom,Our commercial and medical teams are trained to use analytics within compliant guardrails.,Training & Enablement,Foundational
+Pharma & Life Sciences,People,15,Custom,"Medical, legal, and regulatory leaders partner early to enable AI adoption.",Culture & Adoption,Foundational
+Pharma & Life Sciences,Culture & Strategy,16,Shared,Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.,Growth/Revenue,Foundational
+Pharma & Life Sciences,Culture & Strategy,17,Shared,We run an experiment-and-measure culture where every major initiative is judged on ROI.,Growth/Revenue,Foundational
+Pharma & Life Sciences,Culture & Strategy,18,Shared,"We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.",MarTech,Foundational
+Pharma & Life Sciences,Culture & Strategy,19,Custom,We measure omnichannel HCP and patient engagement and feed the response back to optimize the next interaction.,MarTech,Foundational
+Pharma & Life Sciences,Culture & Strategy,20,Custom,We tie AI and analytics investment to measurable commercial and patient-access outcomes.,Growth/Revenue,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Data Governance,1,Shared,Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.,Foundational Tech Build,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Data Governance,2,Shared,"Business teams can find, understand, and self-serve trusted data through a governed catalog.",Data & AI,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Data Governance,3,Shared,"Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.",Foundational Tech Build,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Data Governance,4,Custom,"Data from plants, machines, and ERP is unified into one trusted enterprise view.",Foundational Tech Build,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Data Governance,5,Custom,"Quality, yield, and supply data is consistent and reconciled across sites and systems.",Data & AI,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Technology,6,Shared,"At least one AI/ML model runs in production today, powering a named business workflow beyond a pilot.",Data & AI,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Technology,7,Shared,Our teams build and change their own dashboards and reports through self-serve analytics.,Foundational Tech Build,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Technology,8,Shared,"Intelligent automation or an AI agent already handles a real, recurring task in our operations.",Data & AI,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Technology,9,Custom,"We use AI for predictive maintenance, visual quality inspection, or yield optimization in production.",Data & AI,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Technology,10,Custom,"Frontline and planning teams get real-time dashboards on OEE, quality, and throughput.",Foundational Tech Build,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),People,11,Shared,We have in-house data and AI talent who design and ship solutions end-to-end.,Training & Enablement,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),People,12,Shared,"A structured upskilling program is driving broad, confident AI adoption across our teams.",Training & Enablement,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),People,13,Shared,Our leaders are data-fluent and routinely make decisions from evidence.,Culture & Adoption,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),People,14,Custom,Our plant and engineering teams have the skills to run and improve analytics and AI use-cases.,Training & Enablement,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),People,15,Custom,Operations leaders drive an evidence-based improvement culture on the shop floor.,Culture & Adoption,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Culture & Strategy,16,Shared,Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.,Growth/Revenue,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Culture & Strategy,17,Shared,We run an experiment-and-measure culture where every major initiative is judged on ROI.,Growth/Revenue,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Culture & Strategy,18,Shared,"We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.",MarTech,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Culture & Strategy,19,Custom,We use demand and channel signals to plan production and go-to-market together.,Growth/Revenue,Foundational
+Manufacturing (Semiconductor / Automotive / Tiles / Cement),Culture & Strategy,20,Custom,New process and automation ideas are piloted with clear ROI before scaling across sites.,Growth/Revenue,Foundational
+Healthcare (Providers & Payers),Data Governance,1,Shared,Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.,Foundational Tech Build,Foundational
+Healthcare (Providers & Payers),Data Governance,2,Shared,"Business teams can find, understand, and self-serve trusted data through a governed catalog.",Data & AI,Foundational
+Healthcare (Providers & Payers),Data Governance,3,Shared,"Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.",Foundational Tech Build,Foundational
+Healthcare (Providers & Payers),Data Governance,4,Custom,"Clinical, operational, and financial data is unified into one governed 360 view of the patient journey.",Foundational Tech Build,Foundational
+Healthcare (Providers & Payers),Data Governance,5,Custom,"Our data is interoperable across EHR and departmental systems, so care teams see one record.",Data & AI,Foundational
+Healthcare (Providers & Payers),Technology,6,Shared,"At least one AI/ML model runs in production today, powering a named business workflow beyond a pilot.",Data & AI,Foundational
+Healthcare (Providers & Payers),Technology,7,Shared,Our teams build and change their own dashboards and reports through self-serve analytics.,Foundational Tech Build,Foundational
+Healthcare (Providers & Payers),Technology,8,Shared,"Intelligent automation or an AI agent already handles a real, recurring task in our operations.",Data & AI,Foundational
+Healthcare (Providers & Payers),Technology,9,Custom,"We use AI in a live setting such as triage, capacity planning, or clinical documentation.",Data & AI,Foundational
+Healthcare (Providers & Payers),Technology,10,Custom,"Patients self-serve through digital scheduling, reminders, and AI-assisted support.",MarTech,Foundational
+Healthcare (Providers & Payers),People,11,Shared,We have in-house data and AI talent who design and ship solutions end-to-end.,Training & Enablement,Foundational
+Healthcare (Providers & Payers),People,12,Shared,"A structured upskilling program is driving broad, confident AI adoption across our teams.",Training & Enablement,Foundational
+Healthcare (Providers & Payers),People,13,Shared,Our leaders are data-fluent and routinely make decisions from evidence.,Culture & Adoption,Foundational
+Healthcare (Providers & Payers),People,14,Custom,Our clinical and operations staff are trained and confident using analytics and AI tools.,Training & Enablement,Foundational
+Healthcare (Providers & Payers),People,15,Custom,"Clinical leaders sponsor safe, evidence-based AI adoption across departments.",Culture & Adoption,Foundational
+Healthcare (Providers & Payers),Culture & Strategy,16,Shared,Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.,Growth/Revenue,Foundational
+Healthcare (Providers & Payers),Culture & Strategy,17,Shared,We run an experiment-and-measure culture where every major initiative is judged on ROI.,Growth/Revenue,Foundational
+Healthcare (Providers & Payers),Culture & Strategy,18,Shared,"We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.",MarTech,Foundational
+Healthcare (Providers & Payers),Culture & Strategy,19,Custom,"We activate patient data for outreach within consent and clinical-governance guardrails, respecting each patient's channel preferences.",MarTech,Foundational
+Healthcare (Providers & Payers),Culture & Strategy,20,Custom,"We invest in AI where it demonstrably improves outcomes, access, or cost.",Growth/Revenue,Foundational
+D2C / Digital-Native,Data Governance,1,Shared,Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.,Foundational Tech Build,Foundational
+D2C / Digital-Native,Data Governance,2,Shared,"Business teams can find, understand, and self-serve trusted data through a governed catalog.",Data & AI,Foundational
+D2C / Digital-Native,Data Governance,3,Shared,"Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.",Foundational Tech Build,Foundational
+D2C / Digital-Native,Data Governance,4,Custom,"Our event and customer data streams into a warehouse with a real-time, well-modeled single source of truth.",Foundational Tech Build,Advanced
+D2C / Digital-Native,Data Governance,5,Custom,A feature store or clean modeled layer feeds analytics and ML from the same governed data.,Data & AI,Advanced
+D2C / Digital-Native,Technology,6,Shared,"At least one AI/ML model runs in production today, powering a named business workflow beyond a pilot.",Data & AI,Foundational
+D2C / Digital-Native,Technology,7,Shared,Our teams build and change their own dashboards and reports through self-serve analytics.,Foundational Tech Build,Foundational
+D2C / Digital-Native,Technology,8,Shared,"Intelligent automation or an AI agent already handles a real, recurring task in our operations.",Data & AI,Foundational
+D2C / Digital-Native,Technology,9,Custom,"Personalization, recommendation, or LTV models run in production and shape the live customer experience.",Data & AI,Advanced
+D2C / Digital-Native,Technology,10,Custom,We run always-on experimentation (A/B and holdouts) wired directly into product and marketing.,Growth/Revenue,Advanced
+D2C / Digital-Native,People,11,Shared,We have in-house data and AI talent who design and ship solutions end-to-end.,Training & Enablement,Foundational
+D2C / Digital-Native,People,12,Shared,"A structured upskilling program is driving broad, confident AI adoption across our teams.",Training & Enablement,Foundational
+D2C / Digital-Native,People,13,Shared,Our leaders are data-fluent and routinely make decisions from evidence.,Culture & Adoption,Foundational
+D2C / Digital-Native,People,14,Custom,We have in-house data science and ML engineering that ships models end-to-end.,Training & Enablement,Advanced
+D2C / Digital-Native,People,15,Custom,Our whole team is fluent in metrics and reasons from experiments by default.,Culture & Adoption,Advanced
+D2C / Digital-Native,Culture & Strategy,16,Shared,Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.,Growth/Revenue,Foundational
+D2C / Digital-Native,Culture & Strategy,17,Shared,We run an experiment-and-measure culture where every major initiative is judged on ROI.,Growth/Revenue,Foundational
+D2C / Digital-Native,Culture & Strategy,18,Shared,"We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.",MarTech,Foundational
+D2C / Digital-Native,Culture & Strategy,19,Custom,"Every lifecycle message is individually personalized by recommendation and LTV models, beyond batch segments.",MarTech,Advanced
+D2C / Digital-Native,Culture & Strategy,20,Custom,"Growth decisions are driven by unit economics, cohorts, and CAC/LTV.",Growth/Revenue,Advanced
+Tech / SaaS,Data Governance,1,Shared,Our cloud data warehouse or lakehouse is the trusted single source of truth for the business.,Foundational Tech Build,Foundational
+Tech / SaaS,Data Governance,2,Shared,"Business teams can find, understand, and self-serve trusted data through a governed catalog.",Data & AI,Foundational
+Tech / SaaS,Data Governance,3,Shared,"Personal data is protected end-to-end with consent, access controls, and audit trails that satisfy the data-protection regime that applies to us in practice.",Foundational Tech Build,Foundational
+Tech / SaaS,Data Governance,4,Custom,"Product, usage, and revenue data is unified into a governed warehouse as the single source of truth.",Foundational Tech Build,Advanced
+Tech / SaaS,Data Governance,5,Custom,"We manage data as a product with clear ownership, data contracts, and quality SLAs.",Data & AI,Advanced
+Tech / SaaS,Technology,6,Shared,"At least one AI/ML model runs in production today, powering a named business workflow beyond a pilot.",Data & AI,Foundational
+Tech / SaaS,Technology,7,Shared,Our teams build and change their own dashboards and reports through self-serve analytics.,Foundational Tech Build,Foundational
+Tech / SaaS,Technology,8,Shared,"Intelligent automation or an AI agent already handles a real, recurring task in our operations.",Data & AI,Foundational
+Tech / SaaS,Technology,9,Custom,"AI/ML powers a live product capability (in-product intelligence, scoring, or LLM features) in production.",Data & AI,Advanced
+Tech / SaaS,Technology,10,Custom,"AI agents or automation handle real workflows across engineering, support, or go-to-market today.",Data & AI,Advanced
+Tech / SaaS,People,11,Shared,We have in-house data and AI talent who design and ship solutions end-to-end.,Training & Enablement,Foundational
+Tech / SaaS,People,12,Shared,"A structured upskilling program is driving broad, confident AI adoption across our teams.",Training & Enablement,Foundational
+Tech / SaaS,People,13,Shared,Our leaders are data-fluent and routinely make decisions from evidence.,Culture & Adoption,Foundational
+Tech / SaaS,People,14,Custom,We have in-house ML/LLM engineering that builds and operates models with MLOps/LLMOps discipline.,Training & Enablement,Advanced
+Tech / SaaS,People,15,Custom,Every function reasons from product and usage data as a default operating habit.,Culture & Adoption,Advanced
+Tech / SaaS,Culture & Strategy,16,Shared,Our AI investments are tied to a funded growth strategy with a clearly owned roadmap.,Growth/Revenue,Foundational
+Tech / SaaS,Culture & Strategy,17,Shared,We run an experiment-and-measure culture where every major initiative is judged on ROI.,Growth/Revenue,Foundational
+Tech / SaaS,Culture & Strategy,18,Shared,"We have a unified view of our customers that lets us launch a targeted, personalized campaign to consumers or business/channel partners in under a week.",MarTech,Foundational
+Tech / SaaS,Culture & Strategy,19,Custom,"In-product usage signals automatically trigger onboarding, activation, and expansion flows for each account.",MarTech,Advanced
+Tech / SaaS,Culture & Strategy,20,Custom,Roadmap and go-to-market bets are validated with experiments and tied to net revenue retention.,Growth/Revenue,Advanced

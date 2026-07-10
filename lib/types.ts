@@ -1,6 +1,28 @@
-export type Division = 'mpi' | 'hli' | 'hcib'
-export type FunctionArea = 'support' | 'ops' | 'commercial'
-export type Level = 'cxo' | 'senior' | 'exec'
+export type MainCompany = 'hlmg_management' | 'hong_leong_industries' | 'hume_cement_industries' | 'malaysian_pacific_industries'
+export type Subsidiary =
+  | 'hong_leong_yamaha_motor'
+  | 'hong_leong_yamaha_marine'
+  | 'guocera'
+  | 'gencode'
+  | 'hume_cement'
+  | 'carsem_malaysia'
+  | 'carsem_bangkok'
+  | 'carsem_china'
+
+export interface CompanySelection {
+  mainCompany: MainCompany
+  subsidiary: Subsidiary | null
+}
+
+export type BusinessFunction =
+  | 'general_management'
+  | 'support_functions'
+  | 'sales_marketing_commercial_customer_service'
+  | 'manufacturing_supply_chain_operations_logistics'
+  | 'digital_solutions_delivery'
+
+export type Persona = 'senior_leadership' | 'people_managers' | 'manager_executive'
+
 export type Screen = 'landing' | 'context' | 'questionnaire' | 'report'
 export type Tier = 'bee' | 'elephant' | 'dolphin' | 'unicorn'
 export type SegmentKey = 'governance' | 'technology' | 'people' | 'culture'
@@ -25,9 +47,9 @@ export interface Registrant {
 }
 
 export interface AppState {
-  division: Division | null
-  functionArea: FunctionArea | null
-  level: Level | null
+  company: CompanySelection | null
+  businessFunction: BusinessFunction | null
+  persona: Persona | null
   currentScreen: Screen
   currentQuestion: number
   answers: Record<string, number>
@@ -77,9 +99,9 @@ export interface RoadmapItem {
 }
 
 export interface ReportData {
-  division: Division
-  functionArea: FunctionArea
-  level: Level
+  company: CompanySelection
+  businessFunction: BusinessFunction
+  persona: Persona
   answers: Record<string, number>
   segmentScores: Record<SegmentKey, number>
   overallScore: number
@@ -87,8 +109,8 @@ export interface ReportData {
 }
 
 export interface ShareableState {
-  division: Division
-  functionArea: FunctionArea
-  level: Level
+  company: CompanySelection
+  businessFunction: BusinessFunction
+  persona: Persona
   answers: Record<string, number>
 }

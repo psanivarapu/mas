@@ -1,26 +1,9 @@
 import { Document, Page, View, Text, StyleSheet, Svg, Polygon, Line, renderToBuffer } from '@react-pdf/renderer'
-import type { Division, FunctionArea, Level, SegmentKey, Question, ReportData, RoadmapItem, TimeBucket, Tier } from './types'
+import type { CompanySelection, BusinessFunction, Persona, SegmentKey, Question, ReportData, RoadmapItem, TimeBucket, Tier } from './types'
 import { getScoreColor, getScoreLabel, getAnswerLabel } from './scoring'
 import { BUCKET_LABELS } from './roadmap'
 import { TIER_CONFIGS } from '@/lib/tiers'
-
-const DIVISION_LABELS: Record<Division, string> = {
-  mpi: 'MPI · Semiconductor',
-  hli: 'HLI · Automotive & Tiles',
-  hcib: 'HCIB · Cement & Building',
-}
-
-const FUNCTION_LABELS: Record<FunctionArea, string> = {
-  support: 'Support Functions',
-  ops: 'Manufacturing & Supply Chain',
-  commercial: 'Sales & Marketing',
-}
-
-const LEVEL_LABELS: Record<Level, string> = {
-  cxo: 'VP / CXO',
-  senior: 'Sr Manager / Director',
-  exec: 'Executive / Manager',
-}
+import { companyLabel, BUSINESS_FUNCTION_LABELS, PERSONA_LABELS } from '@/lib/context'
 
 const SEGMENT_NAMES: Record<SegmentKey, string> = {
   governance: 'Data Governance',
@@ -107,9 +90,9 @@ interface RenderReportPdfParams {
   name: string
   email: string
   role: string
-  division: Division
-  functionArea: FunctionArea
-  level: Level
+  company: CompanySelection
+  businessFunction: BusinessFunction
+  persona: Persona
   questions: Question[]
   answers: Record<string, number>
   report: ReportData
@@ -117,7 +100,7 @@ interface RenderReportPdfParams {
 }
 
 export async function renderReportPdf(params: RenderReportPdfParams): Promise<Buffer> {
-  const { name, email, role, division, functionArea, level, questions, answers, report, roadmap } = params
+  const { name, email, role, company, businessFunction, persona, questions, answers, report, roadmap } = params
   const tierConfig = TIER_CONFIGS[report.tier]
 
   const questionScores = questions.map((q) => ({
@@ -150,16 +133,16 @@ export async function renderReportPdf(params: RenderReportPdfParams): Promise<Bu
             <Text>{role}</Text>
           </View>
           <View style={styles.row}>
-            <Text style={{ width: 80, color: '#64748b' }}>Division</Text>
-            <Text>{DIVISION_LABELS[division]}</Text>
+            <Text style={{ width: 80, color: '#64748b' }}>Company</Text>
+            <Text>{companyLabel(company)}</Text>
           </View>
           <View style={styles.row}>
             <Text style={{ width: 80, color: '#64748b' }}>Function</Text>
-            <Text>{FUNCTION_LABELS[functionArea]}</Text>
+            <Text>{BUSINESS_FUNCTION_LABELS[businessFunction]}</Text>
           </View>
           <View style={styles.row}>
-            <Text style={{ width: 80, color: '#64748b' }}>Level</Text>
-            <Text>{LEVEL_LABELS[level]}</Text>
+            <Text style={{ width: 80, color: '#64748b' }}>Persona</Text>
+            <Text>{PERSONA_LABELS[persona]}</Text>
           </View>
         </View>
 

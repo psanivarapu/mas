@@ -1,4 +1,4 @@
-import type { Division, FunctionArea, Level, SegmentKey, Tier, ReportData } from './types'
+import type { CompanySelection, BusinessFunction, Persona, SegmentKey, Tier, ReportData } from './types'
 
 const SEGMENT_PREFIXES: Record<SegmentKey, string> = {
   governance: 'gov',
@@ -41,15 +41,15 @@ export function getTier(score: number): Tier {
 }
 
 export function buildReportData(
-  division: Division,
-  functionArea: FunctionArea,
-  level: Level,
+  company: CompanySelection,
+  businessFunction: BusinessFunction,
+  persona: Persona,
   answers: Record<string, number>
 ): ReportData {
   const segmentScores = computeAllSegmentScores(answers)
   const overallScore = computeOverallScore(segmentScores)
   const tier = getTier(overallScore)
-  return { division, functionArea, level, answers, segmentScores, overallScore, tier }
+  return { company, businessFunction, persona, answers, segmentScores, overallScore, tier }
 }
 
 export function getScoreColor(score: number): string {

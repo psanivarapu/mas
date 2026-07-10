@@ -72,7 +72,7 @@ export default function LandingScreen({ onStart }: LandingScreenProps) {
             Hong Leong Group · Confidential
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight tracking-tight">
-            Where does your division<br />
+            Where does your company<br />
             stand on <span className="gradient-text">AI readiness?</span>
           </h1>
           <p className="text-lg text-gray-400 max-w-xl mx-auto leading-relaxed mb-10">

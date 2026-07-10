@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
-import type { Division, FunctionArea, Level, SegmentKey, Tier } from './types'
+import type { CompanySelection, BusinessFunction, Persona, SegmentKey, Tier } from './types'
+import { companyLabel, BUSINESS_FUNCTION_LABELS, PERSONA_LABELS } from './context'
 
 const FROM_ADDRESS = 'labs@transformtechx.com'
 const NOTIFY_RECIPIENTS = ['labs@transformtechx.com', 'amit@transformtechx.com']
@@ -25,9 +26,9 @@ interface ReportEmailParams {
   name: string
   email: string
   role: string
-  division: Division
-  functionArea: FunctionArea
-  level: Level
+  company: CompanySelection
+  businessFunction: BusinessFunction
+  persona: Persona
   overallScore: number
   tier: Tier
   segmentScores: Record<SegmentKey, number>
@@ -36,14 +37,14 @@ interface ReportEmailParams {
 
 export async function sendReportEmail(params: ReportEmailParams): Promise<void> {
   const resend = getClient()
-  const { name, email, role, division, functionArea, level, overallScore, tier, segmentScores, pdfBuffer } = params
+  const { name, email, role, company, businessFunction, persona, overallScore, tier, segmentScores, pdfBuffer } = params
   const text = [
     `Name: ${name}`,
     `Email: ${email}`,
     `Role: ${role}`,
-    `Division: ${division}`,
-    `Function: ${functionArea}`,
-    `Level: ${level}`,
+    `Company: ${companyLabel(company)}`,
+    `Business Function: ${BUSINESS_FUNCTION_LABELS[businessFunction]}`,
+    `Persona: ${PERSONA_LABELS[persona]}`,
     `Overall score: ${overallScore}`,
     `Tier: ${tier}`,
     `Governance: ${segmentScores.governance}`,
