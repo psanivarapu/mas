@@ -1,0 +1,34 @@
+following changes are for hlmg_assessment only:
+add a drop down with the following options:
+"Select your Company" - 2 drop downs side by side - one for the main company (1,2,3,4) and the other for the subsidiary (a,b,c etc)
+1/ HLMG Management Co.
+2/ Hong Leong Industries Berhad
+	a) Hong Leong Yamaha Motor
+	b) Hong Leong Yamaha Marine
+	c) Guocera Sdn Bhd
+	d) GenCode
+3/ Hume Cement Industries Berhad
+	a) Hume Cement
+4/ Malaysian Pacific Industries
+	a) Carsem Malaysia
+	b) Carsem Bangkok
+	c) Carsem China
+
+after the company is selected the business function selection option should be as follows, make this also a drop down:
+1/ General Management 
+2/ Support Functions (Finance, IT, HR, Legal, IA, CoSec)
+3/ Sales/Marketing/Commercial/Customer Service
+4/ Manufacturing/Supply Chain/Operations/Logistics
+5/ Digital Solutions Delivery
+
+the personas will be: 
+1/ Senior Leadership (CXO/VP)
+2/ People Managers (Director/Senior Manager)
+3/ Manager/Executive
+
+the questionnaire for each businessfunction-persona-segment combination is placed in the folder C:\Users\Lenovo\OneDrive\Documents\PS\Projects\mas-hlmg-worktree\questionnaires\questionnaire_v3.csv - pick up the files for each combination and ensure that they reflect on the app
+1/ column A - industry in the CSV - pick up only Manufacturing (Semiconductor / Automotive / Tiles / Cement)
+2/ for each segment in Column B, keep the same set of questions for any persona selected from the 3 personas mentioned above
+3/ column E is the set of questions mapped to column A (industry) and column B (segment)
+
+IMPORTANT: update only hlmg worktree - DO NOT modify the original mas-coral worktree
