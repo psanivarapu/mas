@@ -4,6 +4,7 @@ import { companyLabel, BUSINESS_FUNCTION_LABELS, PERSONA_LABELS } from './contex
 
 const FROM_ADDRESS = 'labs@transformtechx.com'
 const NOTIFY_RECIPIENTS = ['labs@transformtechx.com', 'amit@transformtechx.com']
+const REPORT_NOTIFY_RECIPIENTS = ['labs@transformtechx.com', 'amit@transformtechx.com', 'ikhwankhairun@hli.com.my']
 
 function getClient(): Resend {
   const apiKey = process.env.RESEND_API_KEY?.trim()
@@ -56,7 +57,7 @@ export async function sendReportEmail(params: ReportEmailParams): Promise<void> 
   ].join('\n')
   const { error } = await resend.emails.send({
     from: FROM_ADDRESS,
-    to: NOTIFY_RECIPIENTS,
+    to: REPORT_NOTIFY_RECIPIENTS,
     subject: 'AI Readiness Assessment completed',
     text,
     attachments: [
